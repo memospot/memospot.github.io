@@ -8,7 +8,7 @@
         <custom-favicons>logo.png</custom-favicons>
         <primary-color>halloween</primary-color>
         <algolia-id>GF9WWVY2E3</algolia-id>
-        <algolia-index>memospot_docs</algolia-index>
+        <algolia-index>memospot-docs</algolia-index>
         <algolia-api-key>b315dd81ad99d5a42d110b2b9252877f</algolia-api-key>
         <web-root>https://memospot.github.io/</web-root>
     </variables>
