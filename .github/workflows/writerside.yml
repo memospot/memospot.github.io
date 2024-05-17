@@ -36,6 +36,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - if: ${{ env.ALGOLIA_KEY == '' }}
+        run: echo -e '\033[0;31m ALGOLIA_KEY not set!\033[0m' && exit 1
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with: { fetch-depth: 0 }
