@@ -12,5 +12,9 @@
         <algolia-api-key>b315dd81ad99d5a42d110b2b9252877f</algolia-api-key>
         <web-root>https://memospot.github.io/</web-root>
     </variables>
-    <build-profile instance="md"/>
+    <build-profile instance="md">
+        <variables>
+            <noindex-content>false</noindex-content>
+        </variables>
+    </build-profile>
 </buildprofiles>
