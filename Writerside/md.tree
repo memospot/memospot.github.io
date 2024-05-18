@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE instance-profile
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
-<instance-profile id="md" name="Memospot Documentation" start-page="ABOUT.md">
-    <toc-element topic="ABOUT.md"/>
-    <toc-element topic="DEVELOPMENT.md"/>
-    <toc-element topic="MIGRATION.md"/>
-    <toc-element topic="DEBUGGING.md"/>
+<instance-profile id="md" name="Memospot" start-page="Overview.md">
+    <toc-element topic="Overview.md"/>
+    <toc-element topic="Configuration.md"/>
+    <toc-element topic="Troubleshooting.md"/>
+    <toc-element topic="Updating-Memos.md"/>
+    <toc-element topic="Data-migration.md"/>
+    <toc-element topic="Contributing.md"/>
+    <toc-element topic="Debugging.md"/>
 </instance-profile>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildprofiles xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-profiles.xsd"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <variables>
         <noindex-content>true</noindex-content>
-        <color-preset>Vivid</color-preset>
-        <header-logo>doclogo.png</header-logo>
+        <color-preset>contrast</color-preset>
+        <header-logo>logo.png</header-logo>
         <custom-favicons>logo.png</custom-favicons>
         <primary-color>halloween</primary-color>
         <algolia-id>GF9WWVY2E3</algolia-id>
@@ -12,5 +12,5 @@
         <algolia-api-key>b315dd81ad99d5a42d110b2b9252877f</algolia-api-key>
         <web-root>https://memospot.github.io/</web-root>
     </variables>
-    <build-profile instance="md" />
+    <build-profile instance="md"/>
 </buildprofiles>
