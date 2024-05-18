@@ -1,7 +1,7 @@
 # Updating Memos
 
 In general, you should download and install new versions of Memospot when they
-are [released](https://github.com/lincolnthalles/memospot/releases). They come
+are [released](https://github.com/memospot/memospot/releases). They come
 bundled with the latest tested Memos version.
 
 > An auto-updater is planned, but it's not yet available.
@@ -27,11 +27,11 @@ capabilities.
 Open PowerShell and run the following command:
 
 ```Shell
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/lincolnthalles/memospot/main/memos-server-updater.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1'))
 ```
 
 > You can check the script source
-> [here.](https://raw.githubusercontent.com/lincolnthalles/memospot/main/memos-server-updater.ps1)
+> [here.](https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1)
 > {style=note}
 
 > You must run PowerShell as Admin if you are using Memospot `MSI` installers.
@@ -50,7 +50,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 > {style="warning"}
 
 The basic update process is to download the latest Memos' server release from
-[memos-builds](https://github.com/lincolnthalles/memos-builds/releases) and
+[memos-builds](https://github.com/memospot/memos-builds/releases) and
 replace the `memos` binary in the Memospot installation folder.
 
 #### From Memos v0.18.2 to v0.21.0 {collapsible="true" default-state="collapsed"}

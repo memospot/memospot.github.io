@@ -1,6 +1,6 @@
 # Contributing
 
-[Memospot](https://github.com/lincolnthalles/memospot) contributor's guide.
+[Memospot](https://github.com/memospot/memospot) contributor's guide.
 
 The recommended code editor is
 [Visual Studio Code](https://code.visualstudio.com/). The project has a
@@ -162,7 +162,7 @@ cargo binstall sccache@0.8.0 --locked -y
 ## Memos server build {collapsible="true" default-state="collapsed"}
 
 The [Memos server](https://github.com/usememos/memos) is built separately on the
-repository [memos-builds](https://github.com/lincolnthalles/memos-builds).
+repository [memos-builds](https://github.com/memospot/memos-builds).
 
 A pre-build hook will automatically download the latest release from the
 repository and put it in the `server-dist` folder. Downloaded files will be

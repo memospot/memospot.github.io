@@ -1,13 +1,13 @@
 # Overview
 
-[Memospot](https://github.com/lincolnthalles/memospot) is a self-contained
+[Memospot](https://github.com/memospot/memospot) is a self-contained
 desktop version of [Memos](https://github.com/usememos/memos), a beautiful,
 privacy-first, lightweight note-taking service.
 
 Available for Windows, macOS, and Linux.
 
-[![Download](https://img.shields.io/github/downloads/lincolnthalles/memospot/total?logo=github)](https://github.com/lincolnthalles/memospot/releases)
-[![GitHub Stars](https://img.shields.io/github/stars/lincolnthalles/memospot?logo=github)](https://github.com/lincolnthalles/memospot)
+[![Download](https://img.shields.io/github/downloads/memospot/memospot/total?logo=github)](https://github.com/memospot/memospot/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/memospot/memospot?logo=github)](https://github.com/memospot/memospot)
 
 ## Main screen {collapsible="true" default-state="expanded"}
 
@@ -30,7 +30,7 @@ Available for Windows, macOS, and Linux.
 ## Installation
 
 Download the latest release for your platform from the
-[GitHub Releases](https://github.com/lincolnthalles/memospot/releases) page.
+[GitHub Releases](https://github.com/memospot/memospot/releases) page.
 
 - On Windows, you may get a warning from Windows Defender SmartScreen. This is
   because the app is not digitally signed. To solve, click `More info` and then
@@ -64,12 +64,12 @@ Memos instance to a single-user Memospot installation, and the other way around.
 
 ## Star history {collapsible="true" default-state="collapsed"}
 
-[![Star History Chart](https://api.star-history.com/svg?repos=lincolnthalles/memospot,lincolnthalles/memos-builds&usememos/memos&type=Date&theme=dark)](https://api.star-history.com/svg?repos=lincolnthalles/memospot,lincolnthalles/memos-builds&usememos/memos&type=Date&theme=dark)
+[![Star History Chart](https://api.star-history.com/svg?repos=memospot/memospot,memospot/memos-builds&usememos/memos&type=Date&theme=dark)](https://api.star-history.com/svg?repos=memospot/memospot,memospot/memos-builds&usememos/memos&type=Date&theme=dark)
 
 ## Supporting
 
 If you like this project, remember to
-[⭐star](https://github.com/lincolnthalles/memospot) it.
+[⭐star](https://github.com/memospot/memospot) it.
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/lincolnthalles)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N5VO0T7)

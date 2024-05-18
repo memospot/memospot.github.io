@@ -19,7 +19,7 @@
 
 > If you are coming from an old Memos version or skipped v0.18.2 and v0.19.0,
 > consider installing
-> [Memospot v0.1.4](https://github.com/lincolnthalles/memospot/releases/tag/v0.1.4).
+> [Memospot v0.1.4](https://github.com/memospot/memospot/releases/tag/v0.1.4).
 > It will fix the database automatically on the first start. {style=note}
 
 ## Legacy instructions {collapsible="true" default-state="collapsed"}
