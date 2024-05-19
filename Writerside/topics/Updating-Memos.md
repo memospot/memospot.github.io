@@ -2,19 +2,23 @@
 
 In general, you should download and install new versions of Memospot when they
 are [released](https://github.com/memospot/memospot/releases). They come
-bundled with the latest tested Memos version.
+bundled with the latest tested Memos server version.
 
 > An auto-updater is planned, but it's not yet available.
 
-> The semantic version scheme is `Major.Minor.Patch`. {style=note}
+> The semantic version scheme used by Memos is `Major.Minor.Patch`. {style=note}
 
-## Standalone server update {collapsible="true" default-state="expanded"}
+## Memos server standalone update
 
-> Standalone server updates can break things due to database and API changes
-> that occur between Major and Minor versions.
+> While a standalone server update works in most cases, manual updates are
+> strongly discouraged for anything other than a **Patch** version release.
+
+> Standalone updates can break things due to database and API changes
+> that occur between Major and Minor versions. The current version of Memospot
+> may not yet be prepared to handle them.
 >
 > If that's the case, you won't be able to revert the server binary to a
-> previous version without reverting to a database backup matching the server
+> previous working version without also reverting to a database backup matching the server
 > version. {style=warning}
 
 ### Script-aided procedure {collapsible="true" default-state="collapsed"}
@@ -39,9 +43,6 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 > This is **not** needed using the `NSIS`/`exe` installer. {style=warning}
 
 ### Manual procedure {collapsible="true" default-state="collapsed"}
-
-> While a standalone server upgrade works in most cases, manual updates are
-> strongly discouraged for anything other than **Patch** version upgrades.
 
 > Do not proceed without taking a backup of your database.
 >
