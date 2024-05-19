@@ -1,5 +1,33 @@
 # Data migration
 
+> The current version of Memos stores assets in a portable format.
+>
+> Data can be seamlessly moved between Memos containers and Memospot instances,
+> regardless of the operating system.
+> {style=note}
+
+> Assets, resources and objects refer to the same thing.
+
+## Data storage location
+
+- Windows: `%LocalAppData%\memospot`
+- POSIX systems: `~/.memospot` (a hidden folder in the user home)
+- Inside Memos container: `/var/opt/memos`
+- Memos' container host:
+    - `~/.memos`
+    - `/root/.memos`
+    - Near your `docker-compose.yml` file if you're using it.
+
+> Relevant files:
+> - `memos_prod.db`
+> - `memos_prod.db-shm` (may not exist)
+> - `memos_prod.db-wal` (may not exist)
+> - `assets` directory
+
+The `.thumbnail_cache` directory and its contents are generated as needed.
+
+## Migrating data from earlier Memos versions
+
 > None of this is needed if you have never stored assets outside the database or
 > if you have used Memospot v0.1.3/v0.1.4 in the past since it contains a
 > built-in database migrator.
@@ -20,7 +48,7 @@
 > If you are coming from an old Memos version or skipped v0.18.2 and v0.19.0,
 > consider installing
 > [Memospot v0.1.4](https://github.com/memospot/memospot/releases/tag/v0.1.4).
-> It will fix the database automatically on the first start. {style=note}
+> It will fix all asset paths in the database automatically on the first start. {style=note}
 
 ## Legacy instructions {collapsible="true" default-state="collapsed"}
 

@@ -2,8 +2,8 @@
 
 ## Post-updates
 
-If you see an error while Memos' interface is loading, press F5 or right-click
-the window and click reload.
+If you see an error while Memos' interface is loading, or it stays white/gray,
+press F5 or right-click the window and click reload.
 
 This is caused by a stale WebView cache and also affects Memos' Docker
 instances. It should happen only once right after the update.

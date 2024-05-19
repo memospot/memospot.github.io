@@ -6,12 +6,12 @@ bundled with the latest tested Memos server version.
 
 > An auto-updater is planned, but it's not yet available.
 
-> The semantic version scheme used by Memos is `Major.Minor.Patch`. {style=note}
-
 ## Memos server standalone update
 
-> While a standalone server update works in most cases, manual updates are
-> strongly discouraged for anything other than a **Patch** version release.
+While a standalone server update works in most cases, manual updates are
+strongly discouraged for anything other than a **Patch** version release.
+
+> The semantic version scheme used by Memos is `Major.Minor.Patch`. {style=note}
 
 > Standalone updates can break things due to database and API changes
 > that occur between Major and Minor versions. The current version of Memospot
@@ -38,9 +38,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 > [here.](https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1)
 > {style=note}
 
-> You must run PowerShell as Admin if you are using Memospot `MSI` installers.
+> You must run PowerShell as Admin if you are using Memospot `MSI` installers,
+> as they do a system-wide installation.
 >
-> This is **not** needed using the `NSIS`/`exe` installer. {style=warning}
+> This is **not** necessary when using the NSIS/exe installer,
+> as it only installs the application for the current user.
+> {style=warning}
 
 ### Manual procedure {collapsible="true" default-state="collapsed"}
 

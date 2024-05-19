@@ -17,4 +17,11 @@
             <noindex-content>false</noindex-content>
         </variables>
     </build-profile>
+    <footer>
+        <link href="https://github.com/memospot/memospot">GitHub</link>
+        <link href="https://github.com/memospot/memospot/releases">Download</link>
+        <link href="https://github.com/memospot/memospot/issues">Issues</link>
+        <link href="https://github.com/memospot/memospot/discussions">Discussions</link>
+        <link href="https://www.usememos.com/docs">Memos Documentation</link>
+    </footer>
 </buildprofiles>

@@ -1,10 +1,9 @@
 # Overview
 
-[Memospot](https://github.com/memospot/memospot) is a self-contained
-desktop version of [Memos](https://github.com/usememos/memos), a beautiful,
-privacy-first, lightweight note-taking service.
+[Memospot](https://github.com/memospot/memospot) is a self-contained desktop version of
+[Memos](https://github.com/usememos/memos)—a privacy-first, lightweight note-taking service. Available for Windows, macOS, and Linux.
 
-Available for Windows, macOS, and Linux.
+This project allows you to use Memos locally without the Docker overhead or to easily test Memos before deploying a container. Data can be seamlessly moved between instances.
 
 [![Download](https://img.shields.io/github/downloads/memospot/memospot/total?logo=github)](https://github.com/memospot/memospot/releases)
 [![GitHub Stars](https://img.shields.io/github/stars/memospot/memospot?logo=github)](https://github.com/memospot/memospot)
@@ -12,13 +11,16 @@ Available for Windows, macOS, and Linux.
 ## Main screen {collapsible="true" default-state="expanded"}
 
 ![demo](capture.webp){height=1499}
+> Switch the page theme by clicking on the icon in the upper right to
+> see Memospot in a different color scheme.
 
-## Project goals
+## Key features
 
-- Provide an easy-to-use single user Memos instance
+- Easy-to-use
+- Full-featured [Memos experience](https://www.usememos.com/docs)
 - Minimal overhead
 - Data portability
-- Enhanced privacy and data safety
+- Enhanced privacy
 
 ## Requirements
 
@@ -40,16 +42,20 @@ Download the latest release for your platform from the
   [allow the app to run](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac)
   first.
 
-## Data Portability {collapsible="true" default-state="expanded"}
+## Data Portability
 
-The current version of Memos stores assets in a portable format. You can freely
-copy the database and assets folder from one system to another, from a hosted
-Memos instance to a single-user Memospot installation, and the other way around.
+> The current version of Memos stores assets in a portable format.
+>
+> Data can be seamlessly moved between Memos containers and Memospot instances,
+> regardless of the operating system.
+> {style=note}
 
-> If you ever need to do a migration from an older Memos version, check
-> [Data Migration](Data-migration.md).
+> If your data is coming from Memos v0.18.1 or earlier, see
+> [Data migration](Data-migration.md#migrating-data-from-earlier-memos-versions).
 
-## Special Thanks {collapsible="true" default-state="expanded"}
+## Special Thanks
+
+This project is made possible by the following open-source projects:
 
 [![Powered by Memos](powered_by_memos.webp "Memos"){height=128}](https://www.usememos.com/)
 
@@ -68,8 +74,7 @@ Memos instance to a single-user Memospot installation, and the other way around.
 
 ## Supporting
 
-If you like this project, remember to
-[⭐star](https://github.com/memospot/memospot) it.
+If you appreciate this project, be sure to [⭐star](https://github.com/memospot/memospot) it on GitHub.
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/lincolnthalles)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N5VO0T7)
