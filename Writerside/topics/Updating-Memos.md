@@ -23,10 +23,10 @@ strongly discouraged for anything other than a **Patch** version release.
 
 ### Script-aided procedure {collapsible="true" default-state="collapsed"}
 
-#### Windows
-
-For convenience, there's an automatic server updater-script with auto-backup
+For convenience, there are server updater-scripts with auto-backup
 capabilities.
+
+#### Windows
 
 Open PowerShell and run the following command:
 
@@ -35,8 +35,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 ```
 
 > You can check the script source
-> [here.](https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1)
-> {style=note}
+> [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.ps1)
+>
 
 > You must run PowerShell as Admin if you are using Memospot `MSI` installers,
 > as they do a system-wide installation.
@@ -44,6 +44,24 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 > This is **not** necessary when using the NSIS/exe installer,
 > as it only installs the application for the current user.
 > {style=warning}
+>
+
+#### Linux/macOS
+
+Open a terminal and run the following command:
+
+```Shell
+curl -fsSL https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.sh | sudo bash
+```
+
+> You can check the script source
+> [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.sh)
+>
+
+> You must run the script with sudo, as the Memospot `deb` package installs Memos to `/usr/bin/`.
+> {style=warning}
+
+The script can take an optional argument to specify a tag to update to. E.g. `… bash -s v0.21.0`.
 
 ### Manual procedure {collapsible="true" default-state="collapsed"}
 
