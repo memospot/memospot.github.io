@@ -11,6 +11,15 @@ some of the Memospot behavior can be configured via `memospot.yaml`.
 ~/.memospot/memospot.yaml
 ```
 
+> Optional locations (if moved manually by the user):
+>
+> ```Shell
+>    $XDG_CONFIG_HOME/memospot/memospot.yaml
+> ```
+> ```Shell
+>    ~/.config/memospot/memospot.yaml
+> ```
+
 - Windows:
 
     - Explorer:
@@ -90,5 +99,10 @@ memospot:
     # Then, you can edit `logging_config.yaml` changing `root.level`
     # from `info` to `debug` to increase the logging level.
     enabled: false
+  remote:
+    # Use Memospot as a client for a remote Memos server [false].
+    # - Added in v0.1.6.
+    enabled: false
+    url: https://demo.usememos.com/
 
 ```
