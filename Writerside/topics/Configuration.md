@@ -80,6 +80,7 @@ memos:
   # env:
   #   NEW_ENV_VAR: "my value"
   env: null
+
 memospot:
   backups:
     # Enable backups [true]. Currently, backups only run before
@@ -87,11 +88,12 @@ memospot:
     enabled: true
     # Backup directory.
     path: null
+
   migrations:
-    # Enable migrations [true]. Currently, there's one migration 
-    # available that will change local resource paths from absolute 
-    # to relative, making your data fully portable.
+    # Enable migrations [true]. These are database
+    # migrations that make upgrading Memos smoother.
     enabled: true
+
   log:
     # Enable logging [false]. Used for advanced debugging.
     # A new file called `logging_config.yaml` will be created next 
@@ -99,10 +101,46 @@ memospot:
     # Then, you can edit `logging_config.yaml` changing `root.level`
     # from `info` to `debug` to increase the logging level.
     enabled: false
+
   remote:
     # Use Memospot as a client for a remote Memos server [false].
     # - Added in v0.1.6.
+    # The URL must point to a valid Memos server, using HTTP or HTTPS.
+    # Other web apps most likely won't pass the internal health check.
     enabled: false
     url: https://demo.usememos.com/
 
+  updater:
+    # Enable auto-updater [true].
+    # - Added in v0.1.7.
+    enabled: true
+
+  window:
+    # Window properties.
+    # - Added in v0.1.7.
+    # Managed variables store the previous state upon app close.
+
+    # Whether the window should be centered upon creation. [true]
+    center: true
+
+    # Whether the window should be fullscreen upon creation. [false]
+    fullscreen: false
+
+    # Whether the window should be resizable upon creation. [true]
+    resizable: true
+
+    # (Managed) Whether the window should be maximized upon creation.
+    maximized: false
+
+    # (Managed) Window initial width.
+    width: 0
+
+    # (Managed) Window initial height.
+    height: 0
+
+    # (Managed) Window initial x position.
+    x: 0
+
+    # (Managed) Window initial y position.
+    y: 0
 ```
