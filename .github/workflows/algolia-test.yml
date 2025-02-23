@@ -1,0 +1,37 @@
+name: Weekly Algolia Random Search
+
+on:
+  schedule:
+    # Run at 00:00 UTC every Monday
+    - cron: '0 0 * * 1'
+  # Allow manual trigger for testing
+  workflow_dispatch:
+
+jobs:
+  random-search:
+    runs-on: ubuntu-latest
+    env:
+      ALGOLIA_APP_ID: GF9WWVY2E3
+      ALGOLIA_API_KEY: b315dd81ad99d5a42d110b2b9252877f
+      ALGOLIA_INDEX_NAME: memospot-docs
+      ALGOLIA_SEARCHES: data,config
+
+    steps:
+      - name: Generate random search query
+        id: random-query
+        run: |
+          # Convert ALGOLIA_SEARCHES to array and pick random entry
+          IFS=',' read -ra SEARCHES <<< "$ALGOLIA_SEARCHES"
+          RANDOM_INDEX=$((RANDOM % ${#SEARCHES[@]}))
+          SEARCH_QUERY="${SEARCHES[$RANDOM_INDEX]}"
+          echo "query=$SEARCH_QUERY" >> $GITHUB_OUTPUT
+
+      - name: Perform Algolia search
+        run: |
+          curl -X POST \
+            "https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX_NAME}/query" \
+            -H "X-Algolia-API-Key: ${ALGOLIA_API_KEY}" \
+            -H "X-Algolia-Application-Id: ${ALGOLIA_APP_ID}" \
+            -H "Content-Type: application/json" \
+            --data-binary '{"params": "query=${{ steps.random-query.outputs.query }}"}' | 
+            jq -r '.hits[].url'
