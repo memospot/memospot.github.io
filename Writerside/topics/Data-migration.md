@@ -11,12 +11,12 @@
 ## Data storage location
 
 - Windows: `%LocalAppData%\memospot`
-- POSIX systems: `~/.memospot` (a hidden folder in the user home)
+- Linux/macOS: `~/.memospot` (a hidden folder in the user home)
 - Inside Memos container: `/var/opt/memos`
-- Memos' container host:
+- Memos container host:
     - `~/.memos`
     - `/root/.memos`
-    - Near your `docker-compose.yml` file if you're using it.
+    - Near your `docker-compose.yml` file, if you're using it.
 
 > Relevant files:
 > - `memos_prod.db`
@@ -80,7 +80,7 @@ migration part and just copy the database files to the new host.
 
 - SSH access to your Docker host, if applicable
 
-- A SCP/SFTP client, like [WinSCP](https://winscp.net/) and
+- An SCP/SFTP client, like [WinSCP](https://winscp.net/) and
   [Cyberduck](https://cyberduck.io): to copy files to/from host, if needed
 
 ### Basic migration

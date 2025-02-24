@@ -1,5 +1,18 @@
 # Troubleshooting
 
+## Updater issues
+
+### Windows
+
+If the updater fails to replace `memos.exe`:
+
+1. Open Task Manager, look for the `memos.exe` process, and end it.
+2. Alternatively, you can use the following terminal command:
+
+```PowerShell
+taskkill /f /im memos.exe
+```
+
 ## Post-updates
 
 If you see an error while Memos' interface is loading, or it stays white/gray,

@@ -1,9 +1,12 @@
 # Configuration
 
+> From v1.0.0, you can configure Memospot via the built-in interface,
+> accessible from `Application > Settings` menu (`CtrlOrCmd`+`,`). {style="note"}
+
 Though there's no need for a regular user to ever touch this file,
 some of the Memospot behavior can be configured via `memospot.yaml`.
 
-## Configuration location
+## File location
 
 - Linux/macOS:
 
@@ -36,7 +39,7 @@ some of the Memospot behavior can be configured via `memospot.yaml`.
 
 ## Sample configuration file
 
-The fields that default to `null` are detected at runtime.
+Fields that default to `null` are detected at runtime.
 
 ```yaml
 memos:
@@ -72,14 +75,16 @@ memos:
   # during Memospot startup.
   port: 0
 
-  # Custom environment variables for Memos. 
-  # Custom keys will be automatically uppercased  
-  # and prefixed with "MEMOS_".
-  # Make sure to always quote custom env values, 
-  # so they get parsed as strings.
-  # env:
-  #   NEW_ENV_VAR: "my value"
-  env: null
+  env:
+    # Custom environment variables for Memos.
+    # https://www.usememos.com/docs/install/runtime-options
+    #
+    # Make sure to always quote custom env values, 
+    # so they get parsed as strings.
+    enabled: false
+    vars:
+      MEMOS_DRIVER: 'postgres'
+      MEMOS_DSN: 'postgresql://root:password@localhost:5432/memos'
 
 memospot:
   backups:
@@ -88,6 +93,14 @@ memospot:
     enabled: true
     # Backup directory.
     path: null
+
+  env:
+    # Custom environment variables for Memospot itself. 
+    # May be used to override hardware acceleration on Linux.
+    enabled: false
+    vars:
+      WEBKIT_DISABLE_DMABUF_RENDERER: '0'
+      WEBKIT_DISABLE_COMPOSITING_MODE: '0'
 
   migrations:
     # Enable migrations [true]. These are database
@@ -109,16 +122,19 @@ memospot:
     # Other web apps most likely won't pass the internal health check.
     enabled: false
     url: https://demo.usememos.com/
+    user_agent: 'Memospot/1.0.0'
 
   updater:
     # Enable auto-updater [true].
     # - Added in v0.1.7.
+    # Can be used to disable the updater  
+    # entirely and prevent notifications.
     enabled: true
 
   window:
     # Window properties.
     # - Added in v0.1.7.
-    # Managed variables store the previous state upon app close.
+    # > Managed variables store the previous state upon app close.
 
     # Whether the window should be centered upon creation. [true]
     center: true
@@ -126,7 +142,7 @@ memospot:
     # Whether the window should be fullscreen upon creation. [false]
     fullscreen: false
 
-    # Whether the window should be resizable upon creation. [true]
+    # Whether the user can resize the window. [true]
     resizable: true
 
     # (Managed) Whether the window should be maximized upon creation.
@@ -143,4 +159,15 @@ memospot:
 
     # (Managed) Window initial y position.
     y: 0
+
+    # Hide the menu bar [false].
+    # * This setting is not available from the settings screen.
+    hide_menu_bar: false
+
+    # theme: [system] | light | dark
+    theme: system
+
+    # locale [system] | en | [pt-BR]
+    locale: system
+
 ```

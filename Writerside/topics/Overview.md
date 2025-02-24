@@ -75,6 +75,3 @@ This project is made possible by the following open-source projects:
 ## Supporting
 
 If you appreciate this project, be sure to [⭐star](https://github.com/memospot/memospot) it on GitHub.
-
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/lincolnthalles)
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N5VO0T7)

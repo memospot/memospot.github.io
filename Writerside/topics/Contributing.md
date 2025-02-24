@@ -2,178 +2,308 @@
 
 [Memospot](https://github.com/memospot/memospot) contributor's guide.
 
-The recommended code editor is
-[Visual Studio Code](https://code.visualstudio.com/). The project has a
-pre-configured workspace, which will prompt you to install the recommended
-extensions.
+The recommended code editor is [Visual Studio Code](https://code.visualstudio.com/). The project has a pre-configured workspace, which will prompt you to install the recommended extensions.
 
-> This project's workflow is heavily based on
-> [Task](https://taskfile.dev/installation), a modern alternative to Makefiles
-> and scripts.
->
-> A `Taskfile` is available with lots of pre-configured [tasks](#using-task) for
-> this project. {style="note"}
+<note>
+
+This project's workflow is heavily based on [Just](https://just.systems), a modern alternative to Makefiles and scripts.
+
+A `justfile` is available with lots of pre-configured [recipes](#using-just) for this project.
+Just installation is covered in the [Pre-requisites](#pre-requisites) section.
+
+</note>
+
+## Container build
+
+It's possible to easily build the app for Linux and Windows (NSIS only) using [Docker](https://www.docker.com/) or [Podman](https://podman.io/), via [Earthly](https://earthly.dev/get-earthly). This bypasses the need to set up the base OS and other dependencies.
+
+```bash
+earthly +build --target=x86_64-pc-windows-msvc --nosign=1
+```
+
+```bash
+earthly +build --target=x86_64-unknown-linux-gnu --nosign=1
+```
+
+> The `--nosign=1` flag is used to skip signing the updater, which only the repository owner can do.
+
+Listing the additional recipes available in the `Earthfile`:
+
+```bash
+earthly ls
+```
 
 ## Pre-requisites
 
-- [Task](https://taskfile.dev/#/installation)
-- A package manager: [Homebrew](https://brew.sh/),
-  [Chocolatey](https://chocolatey.org/install#individual),
-  [winget](https://docs.microsoft.com/windows/package-manager/winget/) or
-  [Scoop](https://scoop.sh/).
-- A system WebView (Edge
-  [WebView2](https://go.microsoft.com/fwlink/p/?LinkId=2124703), Safari, or
-  WebkitGTK), for Tauri to work.
-- A modern computer, with at least 8 GB of RAM and a decent CPU. Rust
-  compilation is very CPU-intensive. Also, `rust-analyzer` (language server)
-  utilizes circa 2GB of RAM.
-- 20 GB of free disk space on the repository drive, for Rust artifacts and
-  `sccache`.
+- A package manager: [Homebrew](https://brew.sh/) or [winget](https://apps.microsoft.com/detail/9NBLGGH4NNS1).
+- A system WebView (Edge [WebView2](https://go.microsoft.com/fwlink/p/?LinkId=2124703), Safari, or WebkitGTK), for Tauri to work.
+- A modern computer, with at least 8 GB of RAM and a decent CPU. Rust compilation is very CPU-intensive. Also,
+  `rust-analyzer` (language server) utilizes circa 2GB of RAM.
+- 20 GB of free disk space, for Rust artifacts.
 
-## Toolchain setup
+<warning>
 
-After fulfilling the basic pre-requisites, open a terminal, cd into the project
-directory and run `task setup` to _try to_ set up the project toolchain.
+After installing a tool, make sure it is available in your system PATH environment variable.
 
-```Shell
-task setup
-```
+Open a new terminal window and try to run the tool from there. If it doesn't work, read the tool's installation instructions thoroughly and setup it accordingly.
 
-If some step fails, you can follow the [manual setup guide](#manual-setup) to
-install the tools by yourself.
+</warning>
 
-### Manual setup {collapsible="true" default-state="collapsed"}
+### OS-specific dependencies
 
-#### OS-specific dependencies {collapsible="true" default-state="collapsed"}
+See also: [Tauri Prerequisites](https://v2.tauri.app/start/prerequisites/)
 
-See also:
-[Tauri Prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites/)
-
-##### Linux
+#### Linux {collapsible="true" default-state="collapsed"}
 
 ```bash
 sudo apt update -y &&
-sudo apt install -y \
-  build-essential \
-  curl \
-  wget \
-  file \
-  libgtk-3-dev \
-  librsvg2-dev \
-  libssl-dev \
-  libwebkit2gtk-4.0-dev \
-  patchelf \ 
-  libayatana-appindicator3-dev
+sudo apt install --no-install-recommends -qq \
+    autoconf \
+    autotools-dev \
+    build-essential \
+    ca-certificates \
+    curl \
+    file \
+    patchelf \
+    wget \
+    git \
+    unzip \
+    nsis \
+    clang \
+    lld \
+    llvm \
+    libayatana-appindicator3-dev \
+    libgtk-3-dev \
+    librsvg2-dev \
+    libssl-dev \
+    libwebkit2gtk-4.1-dev \
+    libxdo-dev \
+    -y
 ```
 
-> Depending on your distro, `libayatana-appindicator3` may conflict with
-> `libappindicator3-dev`. Both are valid for Tauri, and it's ok to ignore the
-> error.
+<note>
 
-##### macOS
+Should you experience an error regarding `soup3-sys`, try manually setting `PKG_CONFIG_PATH` with
+`export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/:/usr/share/pkgconfig"`.
+
+You can make this permanent by adding the line to your `.bashrc` or `.bash_profile` file.
+
+</note>
+
+#### macOS {collapsible="true" default-state="collapsed"}
 
 ```bash
 xcode-select --install
 ```
 
-##### Windows
+#### Windows {collapsible="true" default-state="collapsed"}
+
+[Git](https://git-scm.com/downloads/win)
+
+```powershell
+winget install --id Git.Git -e --source winget
+```
 
 [Build Tools for Visual Studio 2022](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
 
-```Shell
-winget install --id=Microsoft.VisualStudio.2022.BuildTools  -e
+```powershell
+winget install -e --id Microsoft.VisualStudio.2022.BuildTools --override "--passive --wait --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
 ```
 
 [Edge WebView2](https://developer.microsoft.com/microsoft-edge/webview2/#download-section)
 
-```Shell
-winget install --id=Microsoft.EdgeWebView2Runtime  -e
+```powershell
+winget install --id=Microsoft.EdgeWebView2Runtime -e
 ```
 
-#### Project dependencies {collapsible="true" default-state="collapsed"}
+### Bun
 
-> After installing a tool, make sure it is available in your system PATH
-> environment variable.
->
-> Open a new terminal window and try to run the tool from there. If it doesn't
-> work, read the tool's installation instructions and setup's output
-> thoroughly.{style="warning"}
+Bun is a fast JavaScript/TypeScript runtime, bundler, test runner, and package manager. It's used to bundle the front end and to run build scripts.
 
-##### Bun
+[Official Website](https://bun.sh) | [GitHub](https://github.com/oven-sh/bun)
 
-Bun is a fast JavaScript/TypeScript runtime, bundler, test runner, and package
-manager. It's used to bundle the front end and to run build scripts.
+- Homebrew
 
-- [Official Website](https://bun.sh)
-- [GitHub](https://github.com/oven-sh/bun)
+  ```bash
+  brew install oven-sh/bun/bun
+  ```
 
-> After the installation, make sure Bun works from any terminal window.
->
-> `bun --version`
+- Winget
 
-##### Rust
+  ```powershell
+  winget install --id Oven-sh.Bun
+  ```
 
-Rust is used to build the Tauri app.
+### Node JS
 
-- [Rustup](https://rustup.rs/)
-- [Official Website](https://www.rust-lang.org/tools/install)
+Node is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
-Run `rustup default stable` to install the latest stable toolchain.
+<tip>
+Bun should soon replace Node entirely on this project.
 
-> After the installation, make sure `rustc` and `cargo` works in any terminal.
->
-> `rustc --version`
->
-> `cargo --version`
+Make sure Node is installed if you get any front-end build errors.
+</tip>
 
-##### Extra Rust tools
+<note>
 
-- [clippy](https://github.com/rust-lang/rust-clippy): A collection of lints to
-  catch common mistakes and improve Rust code.
-- [sccache](https://github.com/mozilla/sccache): Used to speed up Rust builds.
-- [dprint](https://github.com/dprint/dprint): A pluggable code formatter.
-- [cargo-binstall](https://github.com/cargo-bins/cargo-binstall): Binary
-  installations for Rust projects.
-- [cargo-cache](https://github.com/matthiaskrgr/cargo-cache): Utility to manage
-  `cargo` cache.
-- [cargo-edit](https://github.com/killercup/cargo-edit): Utility to manage
-  `cargo` dependencies.
+Any version starting from Node 18 should work.
 
-All of these tools can be installed from source via `cargo install`, though it
-will take a while to compile them. It's recommended that you install just
-`cargo-binstall` from source and use it to download the other tools binaries.
+</note>
+
+- Homebrew
+
+  ```bash
+  brew install node@22
+  ```
+
+- Winget
+
+  ```powershell
+  winget install --id OpenJS.NodeJS.LTS
+  ```
+
+### UPX (optional; Linux-only)
+
+[UPX](https://upx.github.io/) is a packer for executable files.
+
+<tip>
+
+- Not required to build the app, but it's recommended to reduce its size.
+- Disabled on Windows, as it may cause false-positive AV detections.
+
+</tip>
+
+- Homebrew
+
+  ```bash
+  brew install upx
+  ```
+
+### Rust
+
+[Rustup](https://rustup.rs/) | [Official Website](https://www.rust-lang.org/tools/install)
+
+- Homebrew
+
+  ```bash
+  brew install rustup-init
+  rustup-init -y
+  source "$HOME/.cargo/env"
+  ```
+
+- Winget
+
+  ```powershell
+  winget install --id Rustlang.Rustup
+  ```
+
+### Rust toolchain
 
 ```bash
-rustup component add clippy
-cargo install cargo-binstall --locked
-cargo binstall tauri-cli@1.5.11 --locked -y
-cargo binstall cargo-edit@0.12.2 --locked -y
-cargo binstall cargo-cache@0.8.3 --locked -y
-cargo binstall dprint@0.45.1 --locked -y
-cargo binstall sccache@0.8.0 --locked -y
+rustup default stable
+rustup component add clippy rust-analyzer
 ```
 
-> After the installation, make sure `cargo tauri`, `cargo set-version`, `dprint`
-> and `sccache` works in any terminal.
->
-> `cargo install` outputs the builds to `$HOME/.cargo/bin` which already should
-> be in your PATH.
+### Cargo binstall
 
-## Memos server build {collapsible="true" default-state="collapsed"}
+[Binstall](https://github.com/cargo-bins/cargo-binstall) is a tool for installing pre-built Rust binaries.
 
-The [Memos server](https://github.com/usememos/memos) is built separately on the
-repository [memos-builds](https://github.com/memospot/memos-builds).
+<tip>
 
-A pre-build hook will automatically download the latest release from the
-repository and put it in the `server-dist` folder. Downloaded files will be
-reused on subsequent builds.
+It's possible to use `cargo install` or download the binaries manually instead, but it will take a lot of time.
 
-> If you build the server by yourself, you must put the appropriate server
-> binary in the `server-dist` folder, so Tauri can bundle it with the app.
->
-> Also, server binaries **must** be named using
-> [target triples](https://clang.llvm.org/docs/CrossCompilation.html#target-triple).
-> {style="warning"}
+</tip>
+
+- Homebrew
+
+```bash
+brew install cargo-binstall
+```
+
+- Powershell
+
+```powershell
+Set-ExecutionPolicy Unrestricted -Scope Process; iex (iwr "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.ps1").Content
+```
+
+- Cargo (build from source)
+
+```bash
+cargo install cargo-binstall --locked
+```
+
+#### Rust tools
+
+- [cargo-cache](https://github.com/matthiaskrgr/cargo-cache): Utility to manage `cargo` cache.
+- [cargo-edit](https://github.com/killercup/cargo-edit): Utility to manage `cargo` dependencies.
+- [cargo-xwin](https://github.com/rust-cross/cargo-xwin): Cross compile Cargo projects to Windows.
+- [dprint](https://github.com/dprint/dprint): A pluggable code formatter.
+- [just](https://github.com/casey/just): A command runner.
+
+##### Bash
+
+```bash
+cargo binstall \
+    --disable-telemetry \
+    --target=$(rustc -vV | sed -n 's|host: ||p') \
+    cargo-cache@0.8.3 \
+    cargo-edit@0.13.1 \
+    cargo-xwin@0.18.4 \
+    dprint@0.49.0 \
+    just@1.39.0 \
+    tauri-cli@2.2.7 \
+    -y
+```
+
+<warning>
+
+Should you experience issues with `cargo-tauri` under macOS, like `bad CPU type in executable`, try building it manually:
+
+```bash
+cargo install --locked --target=$(rustc -vV | sed -n 's|host: ||p') tauri-cli
+```
+
+</warning>
+
+##### Powershell
+
+```powershell
+cargo binstall `
+    --disable-telemetry `
+    --target=$(& rustc -vV | Select-String -Pattern "^host:" | ForEach-Object {$_.Line.Split(':')[1].Trim()}) `
+    cargo-cache@0.8.3 `
+    cargo-edit@0.13.1 `
+    dprint@0.49.0 `
+    just@1.39.0 `
+    tauri-cli@2.2.7 `
+    -y
+```
+
+<note>
+
+`cargo binstall` outputs the installed tools to `$HOME/.cargo/bin` which already should be in your PATH.
+
+</note>
+
+## Memos server build
+
+[Memos server](https://github.com/usememos/memos) is built separately on the repository [memos-builds](https://github.com/memospot/memos-builds).
+
+A pre-build hook will automatically download the latest release from the companion repository and put it in the
+`server-dist` folder. Downloaded files will be reused on subsequent builds.
+
+<note>
+
+If you build the server by yourself, you must put the appropriate server binary in the
+`server-dist` folder, so Tauri can bundle it with the app.
+
+</note>
+
+<warning> 
+
+Server binaries **must** be named using [target triples](https://clang.llvm.org/docs/CrossCompilation.html#target-triple).
+
+</warning>
 
 Sample valid server binary names:
 
@@ -181,38 +311,61 @@ Sample valid server binary names:
 - Linux: `memos-x86_64-unknown-linux-gnu`
 - macOS: `memos-x86_64-apple-darwin` / `memos-aarch64-apple-darwin`
 
-> You can check your current system target triplet with the command `rustc -vV`.
-> {style=info}
+<tip>
 
-## Using Task {collapsible="true" default-state="expanded"}
+You can check your current system target triple with the command `rustc -vV`.
 
-After installing Task and cloning the project repository, you can open a
-terminal, `cd` into the project directory and run `task --list-all` to see all
-available tasks.
+</tip>
 
-```Shell
-task --list-all
+## Cloning the repository
+
+```bash
+git clone https://github.com/memospot/memospot.git
 ```
 
-### Common tasks
+## Changing into the project directory
 
-- `task dev`: Run the app in development mode.
-- `task build`: Build the app.
-- `task fmt`: Run all code formatters in parallel.
-- `task lint`: Run all code checkers/linters in parallel.
-- `task test`: Run all available tests.
-- `task clean`: Remove ALL build artifacts and caches.
+```bash
+cd memospot
+```
+
+## Using Just
+
+<warning>
+
+Under Windows, you must allow PowerShell script execution:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+</warning>
+
+At this point, everything should be ready to go.
+
+Listing all available Just recipes:
+
+```bash
+just --list
+```
+
+### Common recipes
+
+- `just dev`: Run the app in development mode.
+- `just build`: Build the app.
+- `just fmt`: Run all code formatters.
+- `just lint`: Run all code checkers/linters.
+- `just test`: Run all available tests.
+- `just clean`: Remove build artifacts and caches.
 
 ## Coding style
 
-Use a consistent coding style. Run `task lint`, `task fmt` and `task test` on
-the repository before submitting a pull request.
+- Try your best match the existing code style.
+- Run `just pre-commit` on the repository before submitting a pull request. This will run all the code formatters, linters and tests.
 
 ## License
 
-By contributing, you agree that all your contributions will be licensed under
-the [MIT License](https://choosealicense.com/licenses/mit/).
+By contributing, you agree that all your contributions will be licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
 
-In short, when you submit code changes, your submissions are understood to be
-under the same _MIT License_ that covers the project. Feel free to contact the
-maintainer if that's a concern.
+In short, when you submit code changes, your submissions are understood to be under the same _MIT
+License_ that covers the project. Feel free to contact the maintainer if that's a concern.
