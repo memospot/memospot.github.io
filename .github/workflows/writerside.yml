@@ -68,7 +68,7 @@ jobs:
     strategy: { fail-fast: false }
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with: { name: docs, path: artifacts }
 
       - name: Test documentation
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with: { name: docs }
 
       - name: Unzip artifact
@@ -108,7 +108,7 @@ jobs:
       image: registry.jetbrains.team/p/writerside/builder/algolia-publisher:2.0.32-3
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with: { name: docs }
 
       - name: Unzip artifact
