@@ -1,0 +1,59 @@
+{
+  "$schema": "https://plugins.dprint.dev/dprint/dprint-plugin-json/latest/schema.json",
+  "excludes": [
+    "**/*.lock",
+    "**/.astro/*",
+    "**/.dprint/*",
+    "**/.git/*",
+    "**/dist/*",
+    "**/node_modules/*"
+  ],
+  "includes": ["**/*.{astro,css,js,json,jsonc,md,mdx,mjs,ts,yml}"],
+  "lineWidth": 96,
+  "indentWidth": 4,
+  "plugins": [
+    // https://github.com/dprint/dprint-plugin-biome/releases
+    "https://plugins.dprint.dev/biome-0.11.7.wasm@1d86d0d25c8e7bdd40236227f5867a4973738049a060706f82d53f895abe1af7",
+    // https://github.com/dprint/dprint-plugin-prettier/releases
+    "https://plugins.dprint.dev/prettier-0.62.0.json@80fefd1450bfd3f469590cc6a3f40f6ace26974f948b9602124f486036fbdfab",
+    // https://github.com/dprint/dprint-plugin-markdown/releases
+    "https://plugins.dprint.dev/markdown-0.20.0.wasm@5eb4e23248231ce0fc6b6379229b3bf7e0f649b337eacf47764ee8fe2c062257"
+    // https://github.com/g-plane/markup_fmt/releases
+    // "https://plugins.dprint.dev/g-plane/markup_fmt-v0.25.3.wasm@6f0edc311626ab3598aa4a7b4634fe1ed2f98ceebe196f61ff2386426c3e6db5"
+  ],
+  "biome": {
+    "associations": ["**/*.{js,json,jsonc,mjs,ts}"],
+    "indentStyle": "space",
+    "indentSize": 4,
+    "lineEnding": "lf",
+    "lineWidth": 96,
+    "trailingComma": "none",
+    "json.indentSize": 2,
+    "json.indentStyle": "space",
+    "json.lineWidth": 96
+  },
+  "markdown": {
+    "associations": ["**/*.{astro,md,mdx}"],
+    "lineWidth": 96
+  },
+  // markup_fmt is messing up Astro files formatting, so it's disabled for now.
+  // "markup": {
+  //   "associations": ["**/*.astro"],
+  //   "indentWidth": 2,
+  //   "printWidth": 96
+  // },
+  "prettier": {
+    "associations": ["**/*.{css,yml}"],
+    "eol": "lf",
+    "printWidth": 96,
+    "useTabs": false,
+    "tabWidth": 4,
+    "proseWrap": "preserve",
+    "singleQuote": false,
+    "trailingComma": "none",
+    "plugin.jsDoc": true,
+    "css.tabWidth": 4,
+    "yaml.tabWidth": 2,
+    "yml.tabWidth": 2
+  }
+}

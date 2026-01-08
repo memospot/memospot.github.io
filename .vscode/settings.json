@@ -1,0 +1,55 @@
+{
+  "[astro]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "color-highlight.matchHslWithNoFunction": true,
+  "color-highlight.languages": ["css", "markdown", "tailwindcss"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit"
+  },
+  "editor.defaultFormatter": "dprint.dprint",
+  "editor.formatOnSave": true,
+  "markdownlint.config": {
+    "MD028": false,
+    "MD033": false
+  },
+  "prettier.enable": false,
+  "files.exclude": {
+    "**/.astro/**": true,
+    "**/.dprint/**": true,
+    "**/node_modules/**": true
+  },
+  "search.exclude": {
+    "**/.astro/**": true,
+    "**/.dprint/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true
+  }
+}

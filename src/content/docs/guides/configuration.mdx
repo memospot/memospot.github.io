@@ -1,0 +1,185 @@
+---
+title: Configuration
+description: A guide to Memospot configuration.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+:::tip[Did you know?]{icon="pen"}
+
+From v1.0.0, you can configure Memospot via the built-in interface (**Application > Settings**).
+
+:::
+
+Memospot behavior can be configured via `memospot.yaml`.
+
+## File location
+
+:::tip
+Clicking "**Application > Browse data directory**" will open the folder where the configuration file is located.
+:::
+
+<Tabs>
+    <TabItem label="Windows">
+        - Explorer/Cmd
+            ```batch
+            %LocalAppData%\memospot\memospot.yaml
+            ```
+        - Powershell
+            ```powershell
+            $Env:LocalAppData\memospot\memospot.yaml
+            ```
+    </TabItem>
+    <TabItem label="Linux/macOS">
+        ```bash
+        ~/.memospot/memospot.yaml
+        ```
+        <details>
+            <summary>Optional locations (if moved manually by the user)</summary>
+            ```
+            ~/.config/memospot/memospot.yaml
+            ```
+            ```bash
+            $XDG_CONFIG_HOME/memospot/memospot.yaml
+            ```
+        </details>
+    </TabItem>
+</Tabs>
+
+## Sample configuration file
+
+Fields that default to `null` are detected at runtime.
+
+```yaml
+memos:
+  # Memos data storage. Where the database and assets are stored.
+  #
+  # This setting allows you to change the data storage (database,
+  # assets, and thumbnails) to a folder synced by a cloud storage
+  # provider client, like OneDrive, Dropbox, Google Drive, etc.
+  data: null
+
+  # Use this to spawn a custom Memos binary.
+  binary_path: null
+
+  # Memos working directory. This is where the `dist` folder
+  # must reside (from v0.18.2 to v0.21.0).
+  working_dir: null
+
+  # Mode: [prod] | dev | demo. This changes the database file in use.
+  mode: prod
+
+  # Address where Memos will listen for connections.
+  # Listening to 127.0.0.1 won't trigger Windows Firewall, and the
+  # server instance will only be accessible from the host computer.
+  # This is the default.
+  #
+  # Listening to 0.0.0.0 will make the server available
+  # at all your computer's network adapters addresses
+  # if it's allowed by the Firewall.
+  addr: 127.0.0.1
+
+  # Memos' port. Managed by Memospot. You can set a custom port,
+  # but it will be automatically changed if the port is in use
+  # during Memospot startup.
+  port: 0
+
+  env:
+    # Custom environment variables for Memos.
+    # https://www.usememos.com/docs/install/runtime-options
+    #
+    # Make sure to always quote custom env values,
+    # so they get parsed as strings.
+    enabled: false
+    vars:
+      MEMOS_DRIVER: "postgres"
+      MEMOS_DSN: "postgresql://root:password@localhost:5432/memos"
+
+memospot:
+  backups:
+    # Enable backups [true]. Currently, backups only run before
+    # database migrations and there's no retention management.
+    enabled: true
+    # Backup directory.
+    path: null
+
+  env:
+    # Custom environment variables for Memospot itself.
+    # May be used to override hardware acceleration on Linux.
+    enabled: false
+    vars:
+      WEBKIT_DISABLE_DMABUF_RENDERER: ""
+      WEBKIT_DISABLE_COMPOSITING_MODE: "1"
+
+  migrations:
+    # Enable database migrations [true].
+    # Extra database migrations that run when Memos is updated.
+    # These may address issues that were not handled by Memos
+    # and can improve the user experience with Memospot.
+    enabled: true
+
+  log:
+    # Local Memos server logs will be redirected to `memos.log`.
+    #
+    # After the first Memospot run with this enabled, you can edit `log.yaml`
+    # (created in the same directory) to set `root.level` to `debug`.
+    enabled: false
+
+  remote:
+    # Use Memospot as a client for a remote Memos server [false].
+    # - Added in v0.1.6.
+    # The URL must point to a valid Memos server, using HTTP or HTTPS.
+    # Other web apps most likely won't pass the internal health check.
+    enabled: false
+    url: https://demo.usememos.com/
+    user_agent: "Memospot/1.0.2"
+
+  updater:
+    # Enable updater [true].
+    # Can be used to disable the updater entirely and prevent notifications.
+    enabled: true
+    check_interval: 3d
+    last_check: 0
+
+  window:
+    # Window properties.
+    # - Added in v0.1.7.
+    # > Managed variables store the previous state upon app close.
+
+    # Whether the window should be centered upon creation. [true]
+    center: true
+
+    # Whether the window should be fullscreen upon creation. [false]
+    fullscreen: false
+
+    # Whether the user can resize the window. [true]
+    resizable: true
+
+    # (Managed) Whether the window should be maximized upon creation.
+    maximized: false
+
+    # (Managed) Window initial width.
+    width: 0
+
+    # (Managed) Window initial height.
+    height: 0
+
+    # (Managed) Window initial x position.
+    x: 0
+
+    # (Managed) Window initial y position.
+    y: 0
+
+    # Hide the menu bar [false].
+    # * This setting is not available from the settings screen.
+    hide_menu_bar: false
+
+    # theme: [system] | light | dark
+    theme: system
+
+    # Reduce transition effects [false].
+    reduce_animation: false
+
+    # locale [system] | en | [pt-BR]
+    locale: system
+```

@@ -1,0 +1,130 @@
+/* Theme from rspress Callouts */
+
+/* Dark mode colors. */
+:root {
+    --aside-tip-bg: rgba(7, 156, 112, 0.1);
+    --aside-tip-border: rgba(7, 156, 112, 0.2);
+    --aside-tip-code-bg: rgba(7, 156, 112, 0.1);
+    --aside-tip-text: #3ec480;
+
+    --aside-note-bg: rgba(0, 149, 255, 0.1);
+    --aside-note-border: rgba(0, 149, 255, 0.2);
+    --aside-note-code-bg: rgba(0, 149, 255, 0.1);
+    --aside-note-text: #66c2ff;
+
+    --aside-caution-bg: rgba(255, 197, 23, 0.12);
+    --aside-caution-border: rgba(255, 197, 23, 0.25);
+    --aside-caution-code-bg: rgba(255, 197, 23, 0.1);
+    --aside-caution-text: rgb(251, 180, 81);
+
+    --aside-danger-bg: rgba(237, 60, 80, 0.12);
+    --aside-danger-border: rgba(237, 60, 80, 0.3);
+    --aside-danger-code-bg: rgba(237, 60, 80, 0.1);
+    --aside-danger-text: rgb(247, 110, 133);
+}
+
+/* Light mode colors. */
+:root[data-theme="light"] {
+    --aside-tip-border: rgba(7, 156, 112, 0.2);
+    --aside-tip-text: #008555;
+    --aside-tip-bg: #f2f9f7;
+
+    --aside-note-border: rgba(0, 149, 255, 0.2);
+    --aside-note-text: #07f;
+    --aside-note-bg: rgba(0, 149, 255, 0.06);
+
+    --aside-caution-border: rgba(255, 197, 23, 0.4);
+    --aside-caution-text: #887233;
+    --aside-caution-bg: rgba(255, 197, 23, 0.1);
+
+    --aside-danger-border: rgba(237, 60, 80, 0.2);
+    --aside-danger-text: #ab2131;
+    --aside-danger-bg: rgba(237, 60, 80, 0.08);
+}
+
+/* Base aside container */
+.starlight-aside {
+    padding: 20px 24px 12px 24px;
+    border-radius: var(--rp-radius, 0.5rem);
+    border: 1px solid transparent;
+}
+
+/* Title */
+.starlight-aside__title {
+    margin-bottom: 8px;
+    color: var(--sl-color-asides-text-accent);
+    position: relative;
+    font-size: 1.2em;
+}
+
+/* Left accent bar similar to ::before stripe */
+.starlight-aside__title::before {
+    content: "";
+    position: absolute;
+    top: -5%;
+    left: -24px;
+    width: 4px;
+    height: 110%;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--sl-color-asides-text-accent);
+}
+
+.starlight-aside__icon {
+    font-size: 1.333em;
+    width: 1em;
+    height: 1em;
+}
+
+.starlight-aside__title + .starlight-aside__content {
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+/* Content text & paragraphs */
+.starlight-aside__content p {
+    margin-top: 0.5em;
+    font-weight: 350;
+}
+
+/* Links follow accent color */
+.starlight-aside__content a {
+    color: var(--sl-color-asides-text-accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+}
+
+/* Types */
+.starlight-aside--note {
+    --sl-color-asides-border: color-mix(in srgb, var(--aside-note-text) 70%, transparent);
+    --sl-color-asides-text-accent: var(--aside-note-text);
+    background-color: var(--aside-note-bg);
+    border-color: var(--aside-note-border);
+}
+
+.starlight-aside--tip {
+    --sl-color-asides-border: color-mix(in srgb, var(--aside-tip-text) 70%, transparent);
+    --sl-color-asides-text-accent: var(--aside-tip-text);
+    background-color: var(--aside-tip-bg);
+    border-color: var(--aside-tip-border);
+}
+
+.starlight-aside--caution {
+    --sl-color-asides-border: color-mix(in srgb, var(--aside-caution-text) 70%, transparent);
+    --sl-color-asides-text-accent: var(--aside-caution-text);
+    background-color: var(--aside-caution-bg);
+    border-color: var(--aside-caution-border);
+}
+
+.starlight-aside--danger {
+    --sl-color-asides-border: color-mix(in srgb, var(--aside-caution-text) 70%, transparent);
+    --sl-color-asides-text-accent: var(--aside-danger-text);
+    background-color: var(--aside-danger-bg);
+    border-color: var(--aside-danger-border);
+}
+
+/* Inline code inside asides */
+.starlight-aside__content :not(pre, div) > code {
+    color: var(--sl-color-asides-text-accent);
+    background-color: color-mix(in srgb, var(--sl-color-asides-border) 10%, transparent);
+    padding: 0.1em 0.25em;
+    border-radius: 0.5em;
+}

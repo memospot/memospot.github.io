@@ -1,0 +1,83 @@
+:root {
+    --sl-font: "Open Sans Variable", sans-serif;
+
+    /* Dark mode colors. */
+    --sl-color-accent-low: #002933;
+    --sl-color-accent: #00768e;
+    --sl-color-accent-high: hsl(188 85.7% 53.3%);
+    --sl-color-white: #ffffff;
+    --sl-color-gray-1: #eeeeee;
+    --sl-color-gray-2: #c2c2c2;
+    --sl-color-gray-3: #8b8b8b;
+    --sl-color-gray-4: #585858;
+    --sl-color-gray-5: #383838;
+    --sl-color-gray-6: #272727;
+    --sl-color-black: #181818;
+}
+
+:root[data-theme="light"] {
+    /* Light mode colors. */
+    --sl-color-accent-low: #a4e2f5;
+    --sl-color-accent: #00748a;
+    --sl-color-accent-high: #003945;
+    --sl-color-white: #181818;
+    --sl-color-gray-1: #272727;
+    --sl-color-gray-2: #383838;
+    --sl-color-gray-3: #585858;
+    --sl-color-gray-4: #8b8b8b;
+    --sl-color-gray-5: #c2c2c2;
+    --sl-color-gray-6: #eeeeee;
+    --sl-color-gray-7: #f6f6f6;
+    --sl-color-black: #ffffff;
+}
+
+.title-wrapper a {
+    color: var(--sl-color-gray-1);
+}
+
+.sidebar-content li a {
+    padding: 0.7em;
+}
+
+.header {
+    .site-title {
+        text-transform: lowercase;
+        font-size: 2.5em;
+        font-weight: 400;
+        font-family: "Tilt Neon Variable", system-ui;
+    }
+    svg {
+        color: var(--sl-color-white);
+    }
+}
+
+#_top {
+    font-size: 3em;
+}
+
+.sl-link-button {
+    font-family: "Staatliches", system-ui;
+    font-size: 1.5em;
+    transition:
+        opacity 150ms ease,
+        transform 150ms ease;
+}
+.sl-link-button:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}
+
+h1 {
+    font-family: "Staatliches", system-ui;
+    font-size: 3em;
+}
+
+.sidebar-content li a {
+    transition:
+        opacity 150ms ease,
+        transform 150ms ease;
+}
+.sidebar-content li a:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}

@@ -1,0 +1,54 @@
+---
+title: Installation
+description: A guide to Memospot installation.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+## Requirements
+
+- Windows 10, macOS, or Linux.
+
+- System WebView (Edge, Safari, or WebkitGTK).
+
+:::note
+On Windows, you will be prompted to install WebView2, if it's not available.
+:::
+
+## Installation
+
+Download the latest release for your platform from the [GitHub Releases](https://github.com/memospot/memospot/releases) page.
+
+:::tip[Safety]{icon="seti:lock"}
+Should you get any warnings about the app being unsafe, don’t worry.
+
+Memospot was not signed with a digital signing certificate, as it costs a considerable amount of money yearly, and this app does not generate any revenue.
+
+Feel free to scan the executable with known tools such as [VirusTotal](https://virustotal.com) or [Jotti's Malware scanner](https://virusscan.jotti.org). Note that some tools may flag [Tauri](https://discord.com/channels/616186924390023171/1142423001002954854) apps regardless, but you should get a very low score, if any.
+
+:::
+
+## Unblocking the App
+
+<Tabs>
+    <TabItem label="Windows">
+      :::caution[Windows Defender SmartScreen]{icon="seti:windows"}
+        Click `More info` and then `Run anyway`.
+      :::
+    </TabItem>
+    <TabItem label="macOS">
+      :::caution[macOS]{icon="apple"}
+
+      You will need to
+      [allow the app to run](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac)
+      right after installing it.
+
+      Removing the quarantine attribute:
+
+      ```bash
+      xattr -dr com.apple.quarantine /Applications/Memospot.app
+      ```
+      :::
+    </TabItem>
+
+</Tabs>

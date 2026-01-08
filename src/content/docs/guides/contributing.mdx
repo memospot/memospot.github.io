@@ -1,0 +1,407 @@
+---
+title: Contributing
+description: A guide to contributing to Memospot.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Icon } from '@astrojs/starlight/components';
+
+# 
+
+[Memospot](https://github.com/memospot/memospot) contributor's guide.
+
+[![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/memospot/memospot)
+
+## License
+
+By contributing, you agree that all your contributions will be licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
+
+In short, when you submit code changes, your submissions are understood to be under the same _MIT License_ that covers the project. Feel free to contact the maintainer if that's a concern.
+
+## Localization
+
+This project is available in multiple languages. You can join the [Crowdin](https://crowdin.com/project/memospot) platform to help make it accessible to a broader audience!
+[![Crowdin](https://badges.crowdin.net/memospot/localized.svg)](https://crowdin.com/project/memospot)
+
+## Development
+
+The recommended code editors are [Zed](https://zed.dev) and [Visual Studio Code](https://code.visualstudio.com/). The project has a pre-configured workspace, which will prompt you to install the recommended extensions.
+
+### Coding style
+
+- Try your best to match the existing code style.
+- Run `just pre-commit` on the repository before submitting a pull request. This will run all the code formatters, linters and tests.
+
+## Container build
+
+It's possible to build the app for Linux and Windows (NSIS installer only) using [Docker Bake](https://docs.docker.com/build/bake/). It just needs a working Docker installation.
+
+This bypasses the need to setup the tooling on the host OS.
+
+<details>
+<summary>How to</summary>
+
+#### Usage
+
+Available actions:
+
+- CI
+  - `lint`
+  - `test`
+- Release
+  - `linux`
+  - `windows`
+- Release (no-bundle)
+  - `linux-no-bundle`
+  - `windows-no-bundle`
+
+```bash
+just bake [action]
+```
+
+:::note[sudo]
+The just recipe is configured to run Docker with sudo, as it’s the standard way to do it.
+
+For a rootless Docker install, edit the `justfile` or invoke `docker buildx bake [action]`.
+:::
+
+or
+
+```bash
+docker buildx bake [action]
+```
+
+See [docker-bake.hcl](https://github.com/memospot/memospot/blob/main/docker-bake.hcl) for all available targets.
+
+#### Pruning caches
+
+:::tip{icon="seti:todo"}
+Prune the builder cache when you are done with building.
+:::
+
+```bash
+just bake prune
+```
+
+or
+
+```bash
+docker builder du && docker builder prune -a
+```
+
+</details>
+
+## Pre-requisites for host machine
+
+- A package manager: [Homebrew](https://brew.sh/) or [winget](https://apps.microsoft.com/detail/9NBLGGH4NNS1).
+- A system WebView (Edge [WebView2](https://developer.microsoft.com/pt-br/microsoft-edge/webview2/?form=MA13LH#download), Safari, or WebKitGTK).
+- A modern computer, with at least 8 GB of RAM and a decent CPU.
+- 20 GB of free disk space, for Rust artifacts.
+
+:::tip[Important]{icon="information"}
+After installing a tool, make sure its directory is listed in your system `PATH` environment variable.
+
+Open a new terminal window and try to run the tool from there. If it doesn't work, read the tool's installation instructions thoroughly and setup it accordingly.
+:::
+
+## OS-specific dependencies
+
+See also: [Tauri Prerequisites](https://v2.tauri.app/start/prerequisites/)
+
+<Tabs syncKey="os">
+    <TabItem label="Linux">
+        ```bash
+        sudo apt update -y &&
+        sudo apt install --no-install-recommends -qq \
+            autoconf \
+            autotools-dev \
+            build-essential \
+            ca-certificates \
+            curl \
+            file \
+            patchelf \
+            wget \
+            git \
+            unzip \
+            nsis \
+            clang \
+            lld \
+            llvm \
+            libayatana-appindicator3-dev \
+            libgtk-3-dev \
+            librsvg2-dev \
+            libssl-dev \
+            libwebkit2gtk-4.1-dev \
+            libxdo-dev \
+            jq \
+            -y
+        ```
+
+    </TabItem>
+    <TabItem label="macOS">
+        ```bash
+        xcode-select --install
+        ```
+
+    </TabItem>
+
+    <TabItem label="Windows">
+
+        1. [Git](https://git-scm.com/downloads/win)
+
+        ```bash
+        winget install --id Git.Git -e --source winget
+        ```
+
+        2. [Build Tools for Visual Studio 2022](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+
+        ```bash
+        winget install -e --id Microsoft.VisualStudio.2022.BuildTools --override "--passive --wait --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
+        ```
+
+        3. [Edge WebView2](https://developer.microsoft.com/microsoft-edge/webview2/#download-section)
+
+        ```bash
+        winget install --id=Microsoft.EdgeWebView2Runtime -e
+        ```
+
+    </TabItem>
+
+</Tabs>
+
+## <Icon name="puzzle" class="inline" /> Tooling
+
+### Bun
+
+[Bun](https://bun.sh) is a fast JavaScript/TypeScript runtime, bundler, test runner, and package manager. It's used to bundle the front end and to run build scripts.
+
+<Tabs syncKey="pm">
+    <TabItem label="Homebrew">
+
+        ```bash
+        brew install oven-sh/bun/bun
+        ```
+    </TabItem>
+
+    <TabItem label="Winget">
+
+        ```bash
+        winget install --id Oven-sh.Bun
+        ```
+    </TabItem>
+
+</Tabs>
+
+### jq
+
+[jq](https://jqlang.org) is a lightweight and flexible command-line JSON processor.
+
+<Tabs syncKey="pm">
+    <TabItem label="Homebrew">
+        ```bash
+        brew install jq
+        ```
+    </TabItem>
+    <TabItem label="Winget">
+        ```bash
+        winget install --id=jqlang.jq -e
+        ```
+    </TabItem>
+</Tabs>
+
+### Rust
+
+[Rustup](https://rustup.rs/) | [Website](https://www.rust-lang.org/tools/install)
+
+<Tabs syncKey="pm">
+    <TabItem label="Homebrew">
+        ```bash
+        brew install rustup-init
+        rustup-init -y
+        source "$HOME/.cargo/env"
+        ```
+    </TabItem>
+    <TabItem label="Winget">
+        ```bash
+        winget install --id Rustlang.Rustup
+        ```
+    </TabItem>
+</Tabs>
+
+### Rust toolchain
+
+```bash
+rustup default stable
+rustup component add clippy rust-analyzer
+```
+
+### Cargo binstall
+
+[Binstall](https://github.com/cargo-bins/cargo-binstall) is a tool for installing pre-built Rust binaries.
+
+<Tabs>
+    <TabItem label="Homebrew">
+        ```bash
+        brew install cargo-binstall
+        ```
+    </TabItem>
+    <TabItem label="Windows (Powershell script)">
+        ```powershell
+        Set-ExecutionPolicy Unrestricted -Scope Process; `
+        iex (iwr "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.ps1").Content
+        ```
+        [Script source](https://github.com/cargo-bins/cargo-binstall/blob/main/install-from-binstall-release.ps1)
+    </TabItem>
+    <TabItem label="Cargo (build from source)">
+        ```bash
+        cargo install cargo-binstall --locked
+        ```
+    </TabItem>
+
+</Tabs>
+
+#### Rust tools
+
+- [cargo-cache](https://github.com/matthiaskrgr/cargo-cache): Utility to manage `cargo` cache.
+- [cargo-edit](https://github.com/killercup/cargo-edit): Utility to manage `cargo` dependencies.
+- [cargo-xwin](https://github.com/rust-cross/cargo-xwin): Cross compile Cargo projects to Windows.
+- [dprint](https://github.com/dprint/dprint): A pluggable code formatter.
+- [just](https://github.com/casey/just): A command runner.
+
+<Tabs>
+    <TabItem label="Linux/macOS">
+        ```bash
+        cargo binstall \
+            --disable-telemetry \
+            --locked \
+            --force \
+            --targets=$(rustc -vV | sed -n 's|host: ||p') \
+            cargo-cache@0.8.3 \
+            cargo-edit@0.13.8 \
+            cargo-xwin@0.20.2 \
+            dprint@0.50.2 \
+            just@1.45.0 \
+            tauri-cli@2.9.5 \
+            -y
+        ```
+    </TabItem>
+    <TabItem label="Windows (PowerShell)">
+
+        ```powershell
+        cargo binstall `
+            --disable-telemetry `
+            --locked `
+            --force `
+            --targets=$(& rustc -vV | Select-String -Pattern "^host:" | ForEach-Object {$_.Line.Split(':')[1].Trim()}) `
+            cargo-cache@0.8.3 `
+            cargo-edit@0.13.8 `
+            dprint@0.50.2 `
+            just@1.45.0 `
+            tauri-cli@2.9.5 `
+            -y
+        ```
+    </TabItem>
+
+</Tabs>
+
+:::note[System path]
+`cargo binstall` outputs the installed tools to `$HOME/.cargo/bin` which already should be in your `PATH` environment variable so the tools can be found from the terminal.
+:::
+
+## Memos server build
+
+[Memos server](https://github.com/usememos/memos) is built separately on the repository [memos-builds](https://github.com/memospot/memos-builds).
+
+A pre-build hook script will automatically download the latest release from the companion repository and put it in the `server-dist` folder, with the appropriate name.
+
+Downloaded files will be reused on subsequent builds.
+
+:::tip[Memos version]{icon="pen"}
+You can set the environment variable `MEMOS_VERSION`, so the build script will download the specified version from the companion repository.
+:::
+
+<details>
+<summary>Manual server build</summary>
+:::caution
+If you build Memos by yourself, you must put the appropriate binary in the `server-dist` directory, so Tauri can bundle it with the app.
+
+Server binaries **must** be named using [target triples](https://clang.llvm.org/docs/CrossCompilation.html#target-triple).
+:::
+
+Sample valid server binary names:
+
+- Windows: `memos-x86_64-pc-windows-msvc.exe`
+- Linux: `memos-x86_64-unknown-linux-gnu`
+- macOS: `memos-x86_64-apple-darwin` `memos-aarch64-apple-darwin`
+
+:::tip
+You can check your current system target triple with the command `rustc -vV`.
+:::
+
+</details>
+
+## Cloning the repository
+
+```bash
+git clone https://github.com/memospot/memospot.git
+cd memospot
+```
+
+At this point, everything should be ready to go.
+
+## Using Just
+
+This project's workflow is heavily based on [Just](https://just.systems), a modern alternative to Makefiles and scripts.
+
+A `justfile` is available with several pre-configured [recipes](#common-recipes) for this project.
+Just installation is covered under the [Cargo binstall](#cargo-binstall) section.
+
+:::caution[On Windows, you must allow script execution in PowerShell]{icon="seti:windows"}
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+:::
+
+### Common recipes
+
+|              |                                   |
+| ------------ | --------------------------------- |
+| `just dev`   | Run the app in development mode   |
+| `just build` | Build the app                     |
+| `just fmt`   | Run all code formatters           |
+| `just lint`  | Run all code checkers/linters     |
+| `just test`  | Run all available tests           |
+| `just clean` | Remove build artifacts and caches |
+
+### List all available Just recipes
+
+```bash
+just --list
+```
+
+## Troubleshooting
+
+### <Icon name="linux" class="inline" /> Linux
+
+#### soup3-sys
+
+Should you experience an error regarding `soup3-sys`, set
+`PKG_CONFIG_PATH` manually:
+
+```bash
+export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/:/usr/share/pkgconfig"
+```
+
+You can make this permanent by adding that line to your shell profile (`~/.bashrc`, `~/.zshrc`, etc).
+
+### <Icon name="apple" class="inline" /> macOS
+
+#### cargo-tauri
+
+Should you experience issues with `cargo-tauri`, like `bad CPU type in executable`, try building it manually:
+
+```bash
+cargo install --locked --force --target=$(rustc -vV | sed -n 's|host: ||p') tauri-cli
+```

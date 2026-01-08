@@ -1,0 +1,42 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - .github/workflows/deploy.yml
+      - src/**
+      - astro.config.mjs
+      - package.json
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  pages: write
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install, build, and upload the website
+        uses: withastro/action@v5
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

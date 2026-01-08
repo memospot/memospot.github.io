@@ -1,0 +1,41 @@
+@layer base, starlight, theme, components, utilities;
+
+@import "@astrojs/starlight-tailwind";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Theme visibility helpers for Starlight compatibility */
+@layer utilities {
+    .sl-dark {
+        display: none;
+    }
+    html.dark .sl-dark,
+    :root.dark .sl-dark,
+    .dark .sl-dark {
+        display: block;
+    }
+
+    .sl-light {
+        display: block;
+    }
+    html.dark .sl-light,
+    :root.dark .sl-light,
+    .dark .sl-light {
+        display: none;
+    }
+
+    /* Default: light theme (data-theme="light") shows .sl-light and hides .sl-dark.
+    When the root is not data-theme="light" (dark mode) show .sl-dark instead. */
+    html:not([data-theme="light"]) .sl-dark,
+    :root:not([data-theme="light"]) .sl-dark,
+    .dark .sl-dark {
+        display: block;
+    }
+
+    /* Hide light-only elements when NOT in light theme */
+    html:not([data-theme="light"]) .sl-light,
+    :root:not([data-theme="light"]) .sl-light,
+    .dark .sl-light {
+        display: none;
+    }
+}

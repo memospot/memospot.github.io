@@ -1,0 +1,24 @@
+code {
+    font-size: 1em;
+    font-family: "Cascadia Code Variable", monospace;
+    font-weight: 350;
+    border-radius: 0.25em;
+}
+
+pre code {
+    white-space: pre-wrap;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+}
+
+.not-content pre {
+    border-radius: 0.5em;
+}
+
+.is-terminal pre {
+    border-radius: 0 0 0.5em 0.5em;
+}
+
+figure .header {
+    border-radius: 0.5em 0.5em 0 0;
+}

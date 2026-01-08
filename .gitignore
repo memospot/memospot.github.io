@@ -1,39 +1,14 @@
-### Project-specific ###
-pdfSource*.html
-*.pdf
-*.zip
+# build output
+dist/
+# generated types
+.astro/
 
-# OS-generated files #
+# dependencies
+node_modules/
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
 .DS_Store
-thumbs.db
-ehthumbs.db
-desktop.ini
-
-### JetBrains ###
-.fleet
-.idea/*
-!.idea/codeStyles
-!.idea/runConfigurations
-
-### SublimeText ###
-*.sublime-workspace
-*.sublime-settings
-
-### Vim ###
-[._]*.s[a-v][a-z]
-!*.svg
-[._]*.sw[a-p]
-[._]s[a-rt-v][a-z]
-[._]ss[a-gi-z]
-[._]sw[a-p]
-Session.vim
-Sessionx.vim
-
-### Visual Studio Code ###
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-
-# Ignore all local history of files
-.history
-.ionide

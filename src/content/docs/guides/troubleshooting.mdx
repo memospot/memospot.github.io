@@ -1,0 +1,55 @@
+---
+title: Troubleshooting
+description: A guide to Memospot troubleshooting.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+## White screen or plain-text error
+
+If you encounter an error while the Memos page is loading, or if it remains blank, press F5 or right-click the window and select 'Reload'.
+
+This is caused by a stale WebView cache and also affects Memos' Docker
+instances. It's more likely to happen right after an update.
+
+## Linux-specific
+
+If Memospot starts but doesn't get past the loading screen, or the screen remains white, you may be experiencing an issue with hardware acceleration in your GPU driver. This is a common issue with Linux virtual machines.
+
+Try running Memospot with the WebView acceleration disabled with the following
+command:
+
+```bash
+WEBKIT_DISABLE_COMPOSITING_MODE=1 memospot
+```
+
+If it solves your problem, you can disable the WebView acceleration permanently
+via [Configuration](/guides/configuration#sample-configuration-file) (see `memospot.env.vars`).
+
+## Updater issues
+
+The easiest way to solve update issues is to download the latest release from the releases page and install it over your current version.
+
+If the auto-updater isn't working for your setup and the notifications are annoying, you can delay checks or disable it in [Configuration](/guides/configuration#sample-configuration-file) (see `memospot.updater`).
+
+## Manual Memos update issues
+
+If the updater fails to replace `memos`:
+
+1. Terminate `memos` and `memospot` processes.
+2. Retry the update.
+
+<Tabs>
+    <TabItem label="Windows">
+        ```powershell
+        [System.Diagnostics.Process]::GetProcesses() | Where-Object {
+        $_.ProcessName -in "memospot", "memos"
+        } | Stop-Process -Force -ErrorAction SilentlyContinue
+        ```
+    </TabItem>
+    <TabItem label="Linux/macOS">
+        ```bash
+        killall memospot memos
+        ```
+    </TabItem>
+</Tabs>

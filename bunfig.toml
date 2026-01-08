@@ -1,0 +1,9 @@
+telemetry = false
+
+[install]
+# Only install package versions published over 7 days ago.
+minimumReleaseAge = 604800 # seconds
+exact = true
+
+[install.lockfile]
+save = true
