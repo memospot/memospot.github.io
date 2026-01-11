@@ -76,6 +76,7 @@ h2 {
 }
 h3 {
     font-family: "Staatliches", system-ui;
+    font-size: 1.7rem;
     svg {
         margin-top: -0.3em;
     }
@@ -88,5 +89,16 @@ h3 {
 }
 .sidebar-content li a:hover {
     opacity: 0.8;
+    transform: translateY(-1px);
+}
+
+.card {
+    border-radius: 0.5em;
+    transition:
+        opacity 150ms ease,
+        transform 150ms ease;
+}
+.card:hover {
+    border-color: var(--sl-color-accent);
     transform: translateY(-1px);
 }
