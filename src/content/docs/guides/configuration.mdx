@@ -70,13 +70,14 @@ memos:
   mode: prod
 
   # Address where Memos will listen for connections.
-  # Listening to 127.0.0.1 won't trigger Windows Firewall, and the
-  # server instance will only be accessible from the host computer.
-  # This is the default.
+  #
+  # Listening to 127.0.0.1 won't trigger Windows Firewall, and
+  # the server instance will only be accessible from the host
+  # computer. This is the default.
   #
   # Listening to 0.0.0.0 will make the server available
   # at all your computer's network adapters addresses
-  # if it's allowed by the Firewall.
+  # (as long as it's allowed by your firewall).
   addr: 127.0.0.1
 
   # Memos' port. Managed by Memospot. You can set a custom port,
@@ -106,8 +107,11 @@ memospot:
   env:
     # Custom environment variables for Memospot itself.
     # May be used to override hardware acceleration on Linux.
+    # Empty values will unset the variable.
     enabled: false
     vars:
+      __NV_DISABLE_EXPLICIT_SYNC: "1"
+      GDK_BACKEND: "x11"
       WEBKIT_DISABLE_DMABUF_RENDERER: ""
       WEBKIT_DISABLE_COMPOSITING_MODE: "1"
 

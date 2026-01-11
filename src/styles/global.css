@@ -1,6 +1,7 @@
 @layer base, starlight, theme, components, utilities;
 
 @import "@astrojs/starlight-tailwind";
+@import "tailwindcss";
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
@@ -37,5 +38,25 @@
     :root:not([data-theme="light"]) .sl-light,
     .dark .sl-light {
         display: none;
+    }
+}
+
+@layer base {
+    ul {
+        list-style-type: disc;
+        list-style-position: outside;
+        padding-left: 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    li {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
     }
 }

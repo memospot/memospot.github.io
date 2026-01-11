@@ -9,7 +9,13 @@ import { Tabs, TabItem } from "@astrojs/starlight/components";
 This is intended for developers and advanced users only.
 :::
 
-There's a built-in logger that can help diagnose some issues.
+There's a built-in logger that can help diagnose some issues. It will split logs
+into two files:
+
+- `memospot.log`: General application logs.
+- `memos.log`: Logs from the embedded Memos server.
+
+Log rotation is enabled by default to prevent log files from growing indefinitely.
 
 :::tip
 [yq](https://github.com/mikefarah/yq) is a convenient way to edit configuration files from the command line. It's available at several package managers: Homebrew, MacPorts, Winget, Chocolatey, and Scoop.

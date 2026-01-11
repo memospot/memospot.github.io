@@ -4,52 +4,103 @@ description: A guide to Memospot troubleshooting.
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Steps } from '@astrojs/starlight/components';
 
-## White screen or plain-text error
+## Memos
+
+### White screen or plain-text error
 
 If you encounter an error while the Memos page is loading, or if it remains blank, press F5 or right-click the window and select 'Reload'.
 
 This is caused by a stale WebView cache and also affects Memos' Docker
 instances. It's more likely to happen right after an update.
 
+## Updates
+
+### Updater errors
+
+The easiest way to solve update issues is to download the latest release from the releases page and install it over your current version.
+
+If the auto-updater isn't working for your setup and the notifications are annoying, you can delay checks or disable the updater entirely in [Configuration](/guides/configuration#sample-configuration-file) (see `memospot.updater`).
+
+### Memos server update issues
+
+If the updater fails to replace `memos`:
+
+<Steps>
+1. Terminate `memos` and `memospot` processes:
+
+    <Tabs>
+      <TabItem label="Windows">
+          ```powershell
+          [System.Diagnostics.Process]::GetProcesses() | Where-Object {
+            $_.ProcessName -in "memospot", "memos"
+          } | Stop-Process -Force -ErrorAction SilentlyContinue
+          ```
+      </TabItem>
+      <TabItem label="Linux/macOS">
+          ```bash
+          killall memospot memos
+          ```
+      </TabItem>
+    </Tabs>
+
+2. Retry the update.
+
+</Steps>
+
 ## Linux-specific
 
-If Memospot starts but doesn't get past the loading screen, or the screen remains white, you may be experiencing an issue with hardware acceleration in your GPU driver. This is a common issue with Linux virtual machines.
+For general Linux troubleshooting, run the app in the terminal to see any error messages:
 
-Try running Memospot with the WebView acceleration disabled with the following
-command:
+```bash
+memospot
+```
+
+:::caution[Heuristic environment variables]{icon="linux"}
+Memospot automatically tries to detect the best settings for your system. You can check current environment variables by enabling and inspecting the [log file](/guides/debugging/#enabling-logging).
+
+You can unset any internal environment variables by defining them again with an empty value, like `FLAG=` (configuration screen) or `FLAG: ""` ([memospot.yaml](/guides/configuration/)).
+:::
+
+:::tip[Making flags permanent]{icon="linux"}
+If one of the following flags resolves your issue, set it in [`memospot.env.vars`](/guides/configuration#sample-configuration-file).
+:::
+
+### White screen or hanging on loading
+
+If you encounter this issue, it may be due to a problem with hardware acceleration in your GPU driver. This is a common issue with Linux virtual machines.
+
+Run the app with the WebView acceleration disabled:
 
 ```bash
 WEBKIT_DISABLE_COMPOSITING_MODE=1 memospot
 ```
 
-If it solves your problem, you can disable the WebView acceleration permanently
-via [Configuration](/guides/configuration#sample-configuration-file) (see `memospot.env.vars`).
+### Sluggish scrolling or typing with NVIDIA GPUs
 
-## Updater issues
+Run the app with explicit synchronization disabled:
 
-The easiest way to solve update issues is to download the latest release from the releases page and install it over your current version.
+```bash
+__NV_DISABLE_EXPLICIT_SYNC=1 memospot
+```
 
-If the auto-updater isn't working for your setup and the notifications are annoying, you can delay checks or disable it in [Configuration](/guides/configuration#sample-configuration-file) (see `memospot.updater`).
+### EGL display-related errors
 
-## Manual Memos update issues
+Run the app forcing the X11 backend:
 
-If the updater fails to replace `memos`:
+```bash
+GDK_BACKEND=x11 memospot
+```
 
-1. Terminate `memos` and `memospot` processes.
-2. Retry the update.
+### Other graphical issues
 
-<Tabs>
-    <TabItem label="Windows">
-        ```powershell
-        [System.Diagnostics.Process]::GetProcesses() | Where-Object {
-        $_.ProcessName -in "memospot", "memos"
-        } | Stop-Process -Force -ErrorAction SilentlyContinue
-        ```
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        ```bash
-        killall memospot memos
-        ```
-    </TabItem>
-</Tabs>
+Run the app disabling the DMABUF renderer:
+
+```bash
+WEBKIT_DISABLE_DMABUF_RENDERER=1 memospot
+```
+
+### GLIBC errors
+
+You'll have to upgrade your distribution.
