@@ -1,0 +1,52 @@
+name: Check (formatting)
+
+on:
+  merge_group:
+  pull_request:
+    paths-ignore:
+      - "**/*.{ico,png,svg,webp}"
+      - "**/*.lock"
+      - "**/justfile"
+  push:
+    paths-ignore:
+      - "**/*.{ico,png,svg,webp}"
+      - "**/*.lock"
+      - "**/justfile"
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  DPRINT_CACHE_DIR: ${{github.workspace}}/.dprint
+
+jobs:
+  dprint:
+    name: Check formatting with dprint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure LF line endings
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install dprint
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2
+        with:
+          repo: dprint/dprint
+          tag: 0.50.2
+          cache: enable
+
+      - name: Cache dprint plugins
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.DPRINT_CACHE_DIR }}
+          key: cache-dprint-plugins-${{ hashFiles('**/.dprint.jsonc','.dprint/plugin-cache-manifest.json') }}
+          restore-keys: cache-dprint-plugins
+
+      - name: Check formatting
+        run: dprint check

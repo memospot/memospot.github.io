@@ -1,14 +1,16 @@
 # build output
 dist/
-# generated types
+
+# project-specific
 .astro/
+.dprint/
 
 # dependencies
 node_modules/
 
 # environment variables
 .env
-.env.production
+.env.*
 
 # macOS-specific files
 .DS_Store

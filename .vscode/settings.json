@@ -44,6 +44,7 @@
   "files.exclude": {
     "**/.astro/**": true,
     "**/.dprint/**": true,
+    "**/dist/**": true,
     "**/node_modules/**": true
   },
   "search.exclude": {

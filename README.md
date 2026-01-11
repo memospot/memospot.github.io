@@ -2,12 +2,12 @@
 
 Memospot landing page and documentation.
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build) [![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/memospot/memospot.github.io)
 
 ## Technology Stack
 
 - [Astro](https://astro.build/) - Static site generator
-- [Starlight](https://starlight.astro.build/) - Astro documentation theme
+- [Starlight](https://starlight.astro.build/) - Astro documentation framework
 - [MDX](https://mdxjs.com/) - Markdown with embedded JSX components
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Bun](https://bun.sh/) - JavaScript runtime and package manager
@@ -68,4 +68,4 @@ For consistency with the parent project, a `justfile` is also provided with simi
 
 ## Contributing
 
-Contributions are welcome! Please read the [contributing guide](src/content/docs/guides/contributing.mdx) for extra details.
+Contributions are welcome! Please read the [contribution guide](https://memospot.github.io/guides/contributing/) for extra details.
