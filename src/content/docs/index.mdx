@@ -5,17 +5,17 @@ template: splash # Remove or comment out this line to display the site sidebar o
 hero:
   tagline: Memos note-taking service as a desktop application.
   image:
-      alt: Memospot logo
-      dark: ../../assets/capture_dark.webp
-      light: ../../assets/capture_light.webp
+    alt: Memospot logo
+    dark: ../../assets/capture_dark.webp
+    light: ../../assets/capture_light.webp
   actions:
-      - text: Documentation
-        link: /guides/
-        icon: document
-        variant: secondary
-      - text: Download
-        link: https://github.com/memospot/memospot/releases/latest
-        icon: right-arrow
+    - text: Documentation
+      link: /guides/
+      icon: document
+      variant: secondary
+    - text: Download
+      link: https://github.com/memospot/memospot/releases/latest
+      icon: right-arrow
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
@@ -35,19 +35,17 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 	<Card title="Data portability" icon="seti:db">
 	  Data can be seamlessly moved between hosted Memos and local Memospot instances.
 
-    	Start taking notes on your desktop and later migrate them to a hosted Memos server if desired.
-    </Card>
-
-    <Card title="Enhanced privacy" icon="seti:ignored">
-    	All data is stored locally on your device, ensuring maximum privacy and control.
+    Start taking notes on your desktop and later migrate them to a hosted Memos server if desired.
+  </Card>
+  <Card title="Enhanced privacy" icon="seti:ignored">
+    All data is stored locally on your device, ensuring maximum privacy and control.
 
     Neither Memospot nor Memos tracks any user data.
-    </Card>
-    <Card title="Lightweight" icon="seti:html">
-    	Memospot is designed to be lightweight and efficient, minimizing resource usage on your device.
-    </Card>
-
-<Card title="Cross-platform" icon="laptop">
+  </Card>
+  <Card title="Lightweight" icon="seti:html">
+   	Memospot is designed to be lightweight and efficient, minimizing resource usage on your device.
+  </Card>
+  <Card title="Cross-platform" icon="laptop">
 		Available for Windows, macOS, and Linux.
 	</Card>
 </CardGrid>

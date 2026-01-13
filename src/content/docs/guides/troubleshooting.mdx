@@ -10,7 +10,8 @@ import { Steps } from '@astrojs/starlight/components';
 
 ### White screen or plain-text error
 
-If you encounter an error while the Memos page is loading, or if it remains blank, press F5 or right-click the window and select 'Reload'.
+If you encounter an error while the Memos page is loading, or if it remains blank,
+press F5 or right-click the window and select 'Reload'.
 
 This is caused by a stale WebView cache and also affects Memos' Docker
 instances. It's more likely to happen right after an update.
@@ -28,25 +29,22 @@ If the auto-updater isn't working for your setup and the notifications are annoy
 If the updater fails to replace `memos`:
 
 <Steps>
-1. Terminate `memos` and `memospot` processes:
-
-    <Tabs>
-      <TabItem label="Windows">
+  1. Terminate `memos` and `memospot` processes:
+      <Tabs>
+        <TabItem label="Windows">
           ```powershell
           [System.Diagnostics.Process]::GetProcesses() | Where-Object {
             $_.ProcessName -in "memospot", "memos"
           } | Stop-Process -Force -ErrorAction SilentlyContinue
           ```
-      </TabItem>
-      <TabItem label="Linux/macOS">
+        </TabItem>
+        <TabItem label="Linux/macOS">
           ```bash
           killall memospot memos
           ```
-      </TabItem>
-    </Tabs>
-
-2. Retry the update.
-
+        </TabItem>
+      </Tabs>
+  2. Retry the update.
 </Steps>
 
 ## Linux-specific
@@ -58,13 +56,13 @@ memospot
 ```
 
 :::caution[Heuristic environment variables]{icon="linux"}
-Memospot automatically tries to detect the best settings for your system. You can check current environment variables by enabling and inspecting the [log file](/guides/debugging/#enabling-logging).
+  Memospot automatically tries to detect the best settings for your system. You can check current environment variables by enabling and inspecting the [log file](/guides/debugging/#enabling-logging).
 
-You can unset any internal environment variables by defining them again with an empty value, like `FLAG=` (configuration screen) or `FLAG: ""` ([memospot.yaml](/guides/configuration/)).
+  You can unset any internal environment variables by defining them again with an empty value, like `FLAG=` (configuration screen) or `FLAG: ""` ([memospot.yaml](/guides/configuration/)).
 :::
 
 :::tip[Making flags permanent]{icon="linux"}
-If one of the following flags resolves your issue, set it in [`memospot.env.vars`](/guides/configuration#sample-configuration-file).
+  If one of the following flags resolves your issue, set it in [`memospot.env.vars`](/guides/configuration#sample-configuration-file).
 :::
 
 ### White screen or hanging on loading

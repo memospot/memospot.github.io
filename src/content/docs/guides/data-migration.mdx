@@ -3,125 +3,136 @@ title: Data migration
 description: A guide to data migration between Memos and Memospot.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 :::tip[Portable data]
-The current version of Memos stores assets in a portable format.
+  The current version of Memos stores assets in a portable format.
 
-All data can be seamlessly moved between Memos containers and Memospot instances, regardless of the operating system.
+  All data can be seamlessly moved between Memos containers and Memospot instances,
+  regardless of the operating system.
 :::
 
-> Assets, attachments, resources, and objects are interchangeable terms that refer to the same thing: uploaded files.
+> Assets, attachments, resources, and objects are interchangeable
+> terms that refer to the same thing: uploaded files.
 
 ## Data storage location
 
 :::note[Relevant files]
-
-- `memos_prod.db`
-- `memos_prod.db-shm` (may not exist)
-- `memos_prod.db-wal` (may not exist)
-- `assets` directory
-
+  - `memos_prod.db`
+  - `memos_prod.db-shm` (may not exist)
+  - `memos_prod.db-wal` (may not exist)
+  - `assets` directory
 :::
 
-The `.thumbnail_cache` directory and its contents are generated as needed. You may skip it
+The `.thumbnail_cache` directory and its contents are generated as needed. You may ignore it
 when migrating data.
 
 ### Memospot
 
 <Tabs>
-    <TabItem label="Windows">
-        ```batch
-        %LocalAppData%\Memospot
-        ```
-
-        ```powershell
-        $Env:LocalAppData\Memospot
-        ```
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        ```bash
-        ~/.memospot
-        ```
-        > Hidden folder in user's Home.
-        > Toggle visibility with *Ctrl+H* or *Cmd+Shift+.*
-        <details>
-            <summary>Optional locations (if moved manually by the user)</summary>
-            ```
-            ~/.config/memospot
-            ```
-            ```bash
-            $XDG_CONFIG_HOME/memospot
-            ```
-        </details>
-    </TabItem>
-
+  <TabItem label="Windows">
+    ```batch
+    %LocalAppData%\Memospot
+    ```
+    ```powershell
+    $Env:LocalAppData\Memospot
+    ```
+  </TabItem>
+  <TabItem label="Linux/macOS">
+    ```bash
+    ~/.memospot
+    ```
+    > Hidden folder in user's Home.
+    > Toggle visibility with *Ctrl+H* or *Cmd+Shift+.*
+    <details>
+      <summary>Optional locations (if moved manually by the user)</summary>
+      ```
+      ~/.config/memospot
+      ```
+      ```bash
+      $XDG_CONFIG_HOME/memospot
+      ```
+    </details>
+  </TabItem>
 </Tabs>
 
 :::tip[Alternate location]
-If you haven't found your data on the predefined directories, check your [configuration](/guides/configuration#sample-configuration-file) (see `memos.data`).
+  If you haven't found your data on the predefined directories, check your
+  [`memos.data`](/guides/configuration#sample-configuration-file) setting.
 :::
 
 ### Memos server
 
 <Tabs>
-    <TabItem label="Memos container Host">
-        ```bash
-        ~/.memos
-        ```
-        ```bash
-        /root/.memos
-        ```
-        :::tip
-        If you are using a custom `docker-compose.yml` file, check if your data is in the same directory as it.
-        :::
-    </TabItem>
-
-    <TabItem label="Inside Memos container">
-        ```bash
-        /var/opt/memos
-        ```
-    </TabItem>
-
-    <TabItem label="Windows Server">
-        ```batch
-        %ProgramData%\memos
-        ```
-
-        ```powershell
-        $Env:ProgramData\memos
-        ```
-    </TabItem>
-
+  <TabItem label="Memos container Host">
+    ```bash
+    ~/.memos
+    ```
+    ```bash
+    /root/.memos
+    ```
+    :::tip[docker-compose]
+      If you are using a custom `docker-compose.yml` file, check if your data is in the same directory as it.
+    :::
+  </TabItem>
+  <TabItem label="Inside Memos container">
+    ```bash
+    /var/opt/memos
+    ```
+  </TabItem>
+  <TabItem label="Windows Server">
+    ```batch
+    %ProgramData%\memos
+    ```
+    ```powershell
+    $Env:ProgramData\memos
+    ```
+  </TabItem>
 </Tabs>
 
 ## Basic data migration
 
-- Close Memospot and/or stop the Memos Docker container
-- Copy your `assets` folder from source to the destination data directory
-- Copy `memos_prod.db` (with the sidecar journal files, if they exist) to the destination data directory
+<Steps>
+  1. Close Memospot and/or stop the Memos Docker container.
+  2. Copy your `assets` folder from source to the destination data directory.
+  3. Copy `memos_prod.db` to the destination data directory.
+      :::note[Journal files]
+        Always copy existing journal files (`memos_prod.db-shm` and `memos_prod.db-wal`)
+        along with the database file.
 
-:::note[Journal files]
-Always copy existing journal files (`memos_prod.db-shm` and `memos_prod.db-wal`)
-along with the database file.
+        They may contain recent data that has not been committed to the database yet.
 
-They may contain recent data that has not been committed to the database yet.
+        Note that these files won't exist if the database was closed properly.
+      :::
+  4. That's it! Start Memospot or the Memos container on the destination.
+</Steps>
 
-Note that these files won't exist if the database was closed properly.
+## Migrating data from old Memos versions
 
+:::tip[Automatic migration]
+  If you are coming from an old Memos version,
+  consider installing [Memospot v1.0.2](https://github.com/memospot/memospot/releases/tag/v1.0.2).
+  It will fix all asset paths in the database automatically on the first start.
+
+  This versions also contains the last Memos server version
+  (v0.25.2) that can upgrade very old database schemas.
 :::
 
-## Migrating data from earlier Memos versions
+:::caution[Exceptions]
+  - You have never stored assets outside the database (default
+  initial configuration).
+  - You have used Memospot v0.1.3+ in the past, since it contains a
+  built-in database migrator.
 
-:::caution
-None of the following is needed if you have never stored assets outside the database (default behavior) or
-if you have used Memospot v0.1.3+ in the past since it contains a
-built-in database migrator.
-
-If that's the case, all your data is already portable.
+  If one of this is true, all your data is already portable.
 :::
 
-## Brief history
+## Legacy instructions
+
+Valid up to Memos v0.18.1. Superseded on Memos v0.18.2+.
+
+### Why this is documented here
 
 - Up to Memos v0.18.1, databases and assets were not portable. They pointed to
   absolute paths at the host's file system, and moving data between systems required
@@ -132,15 +143,7 @@ If that's the case, all your data is already portable.
 - Memospot v0.1.3/v0.1.4 (bundled with Memos v0.20.0, compatible up to v0.21.0)
   shipped with its own fast asset migrator.
 
-:::tip
-If you are coming from an old Memos version,
-consider installing [Memospot v1.0.2](https://github.com/memospot/memospot/releases/tag/v1.0.2).
-It will fix all asset paths in the database automatically on the first start.
-
-This versions also contains the last Memos server version (v0.25.2) that can upgrade very old database schemas.
-:::
-
-## Legacy instructions (before v0.18.2)
+### Introduction
 
 This guide will help you migrate your Memos database and assets to a new host.
 
@@ -151,253 +154,282 @@ appropriate steps.
 If you only used the default `Database` object storage, you can skip the assets
 migration part and just copy the database files to the new host.
 
-:::note
-MySQL and PostgreSQL are not supported by Memospot, so this guide will only
-cover SQLite migrations.
+:::note[Database drivers]
+  MySQL and PostgreSQL are not supported by Memospot, so this guide will only
+  cover **SQLite** migrations.
 
-Check Memos'
-[database documentation](https://usememos.com/docs/configuration/database)
-if you need to work with other drivers.
-
+  Refer to the Memos [database documentation](https://usememos.com/docs/configuration/database)
+  if you need to work with other drivers.
 :::
 
-:::danger
-Do not proceed without taking an offline backup of your database.
+:::danger[Backup]
+  Do not proceed without taking an offline backup of your database.
 
-Stop the server and copy the database files and assets to a location
-outside your working scope for extra safety.
+  Stop the server and copy the database files and assets to a location
+  outside your working scope for extra safety.
 :::
 
 ### Requirements
 
-- A SQLite3 client, like
-  [DB Browser for SQLite](https://github.com/sqlitebrowser/sqlitebrowser)
+<Steps>
+  1. A SQLite3 client, like [DB Browser for SQLite](https://github.com/sqlitebrowser/sqlitebrowser).
+  2. SSH access to your Docker host, if applicable.
+  3. An SCP/SFTP client, like [WinSCP](https://winscp.net/) and [Cyberduck](https://cyberduck.io): to copy files to/from host, if needed.
+</Steps>
 
-- SSH access to your Docker host, if applicable
+### Data migration
 
-- An SCP/SFTP client, like [WinSCP](https://winscp.net/) and
-  [Cyberduck](https://cyberduck.io): to copy files to/from host, if needed
+<Steps>
+  1. Close Memospot and stop your Docker container.
+  2. Copy your assets folder from source to destination host.
+  3. Copy the database files to a work directory on your local machine:
 
-### Basic migration
+      :::note[Database files]
+      - `memos_prod.db`
+      - `memos_prod.db-shm` (may not exist)
+      - `memos_prod.db-wal` (may not exist)
+      :::
 
-- Close Memospot and stop your Docker container
-- Copy your assets folder from source to destination host
-- Copy `memos_prod.db` (and sidecar files `memos_prod.db-shm` and
-  `memos_prod.db-wal`, if they exist) to a work directory on your local machine
-- Open the copied `memos_prod.db` with your SQLite client
-- Execute the [appropriate SQL queries](#replacing-assets-paths-in-the-database)
-- Write the changes to the database and close it
-- Copy the modified `memos_prod.db` file to the destination
+  4. Open the copied `memos_prod.db` with your SQLite client.
+  5. Execute the appropriate [SQL queries](#queries).
+  6. Write the changes to the database and close it.
+  7. Copy the modified `memos_prod.db` file to the destination.
+</Steps>
 
-:::tip
-The default Memos data path on a Docker _**host**_ is `~/.memos/`.
+:::tip[Data paths]
+  The default Memos data path on a Docker _**host**_ is `~/.memos/`.
 
-Within the _**container**_, the path is `/var/opt/memos`.
+  Within the _**container**_, the path is `/var/opt/memos`.
 
-Unless you changed it, `~/.memos/` is where you'll find your assets and
-database.
-
+  Unless you changed it, `~/.memos/` is where you'll find your assets and
+  database.
 :::
 
 ### Replacing assets paths in the database
 
 The following queries assume the following:
 
-- You are using the default internal Docker volume path `/var/opt/memos`
+<Steps>
+  1. You are using the default internal Docker volume path `/var/opt/memos`.
+  2. All your relative paths are using the default `assets` folder.
+</Steps>
+> If any of these assumptions do not hold for your setup, you must adjust the queries.
 
-- All your relative paths are using the default `assets` folder
-
-:::caution
-Pay attention to the leading and trailing slashes when editing the queries
-below.
-
+:::caution[Path separator]
+  Pay attention to the leading and trailing slashes when editing the queries below.
 :::
 
-:::danger
-Remember to always back up your database before running SQL queries.
+:::danger[Backup]
+  Remember to always back up your database before running SQL queries.
 :::
 
-The following sections contains queries to replace the assets paths in the
-database.
+### Queries
 
-Pick one path style:
+The following sections contains queries to replace the assets paths in the database.
 
-#### Using absolute paths (Memos v0.18.0)
+Pick one path style and click to expand:
 
-:::danger
-There are some `__PLACEHOLDERS__` in the following queries that you must
-replace with resolved absolute paths from your system, as SQL clients won't
-resolve system environment variables.
-:::
+<details>
+  <summary>Using absolute paths (up to Memos v0.18.0)</summary>
 
-<Tabs>
+  :::danger[Edition needed]
+    There are some `__PLACEHOLDERS__` in the following queries that you must
+    replace with resolved absolute paths from your system, as SQL clients won't
+    resolve system environment variables.
+  :::
+
+  Getting the absolute Memospot data path:
+  <Tabs>
     <TabItem label="Linux/macOS">
-        ```bash
-        echo "$HOME/.memospot"
-        ```
+      ```bash
+      echo "$HOME/.memospot"
+      ```
     </TabItem>
-
     <TabItem label="Windows">
-        ```powershell
-        Write-Host "$Env:LocalAppData\memospot"
-        ```
+      ```powershell
+      Write-Host "$Env:LocalAppData\memospot"
+      ```
     </TabItem>
+  </Tabs>
 
-    <TabItem label="Windows (standalone server)">
-        ```powershell
-        Write-Host "$Env:ProgramData\memos"
-        ```
-    </TabItem>
+  :::caution
+    When migrating data **to** a Memos Docker container, you must specify the
+    _internal_ Docker volume path, which is `/var/opt/memos`.
 
-</Tabs>
+    The host-accessible data path is set later (`~/.memos/` in the example), when you launch the container:
 
-:::caution
-When migrating data **to** a Memos Docker container, you must specify the
-_internal_ Docker volume path, which is `/var/opt/memos`.
+    ```bash
+    docker run -d \
+    --init \
+    --name memos \
+    --publish 5230:5230 \
+    --volume ~/.memos/:/var/opt/memos \
+    ghcr.io/usememos/memos:latest
+    ```
+  :::
 
-The host-accessible data path is set later (`~/.memos/` in the example), when you launch the container:
+  Choose what best suits your migration scenario, then copy and **adjust** the SQL query:
 
-```bash
-docker run -d \
- --init \
- --name memos \
- --publish 5230:5230 \
- --volume ~/.memos/:/var/opt/memos \
- ghcr.io/usememos/memos:latest
-```
-
-:::
-
-Choose what best suits your migration scenario, then copy and **adjust** the SQL query:
-
-<Tabs>
+  <Tabs>
     <TabItem label="Windows to Docker">
-        ```sql
-        -- Replace Windows paths with default internal Docker paths
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    '__MEMOS_DATA_WINDOWS__',
-                                    '/var/opt/memos');
+      ```sql
+      -- Replace Windows paths with default internal Docker paths
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '__MEMOS_DATA_WINDOWS__',
+        '/var/opt/memos'
+      );
 
-        -- Replace remaining Windows path separators
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path, '\', '/');
-        ```
+      -- Replace remaining Windows path separators
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '\',
+        '/'
+      );
+      ```
     </TabItem>
-
     <TabItem label="Linux/macOS to Docker">
-        ```sql
-        -- Replace Linux/macOS host paths with default internal Docker paths
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    '__MEMOS_DATA_POSIX__',
-                                    '/var/opt/memos');
-        ```
+      ```sql
+      -- Replace Linux/macOS host paths with default internal Docker paths
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '__MEMOS_DATA_POSIX__',
+        '/var/opt/memos'
+      );
+      ```
     </TabItem>
     <TabItem label="Linux/macOS to Windows">
+      ```sql
+      -- Replace Linux/macOS paths with Windows paths
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '__MEMOS_DATA_POSIX__',
+        '__MEMOS_DATA_WINDOWS__'
+      );
 
-        ```sql
-        -- Replace Linux/macOS paths with Windows paths
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    '__MEMOS_DATA_POSIX__',
-                                    '__MEMOS_DATA_WINDOWS__');
-
-        -- Replace remaining POSIX path separators
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path, '/', '\');
-        ```
+      -- Replace remaining POSIX path separators
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '/',
+        '\'
+      );
+      ```
     </TabItem>
     <TabItem label="Docker to Linux/macOS">
-
-        ```sql
-        -- Replace default internal Docker paths with Linux/macOS paths
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    '/var/opt/memos',
-                                    '__MEMOS_DATA_POSIX__');
-        ```
-
+      ```sql
+      -- Replace default internal Docker paths with Linux/macOS paths
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '/var/opt/memos',
+        '__MEMOS_DATA_POSIX__'
+      );
+      ```
     </TabItem>
     <TabItem label="Memos Docker to Windows">
+      ```sql
+      -- Replace default Docker volume paths with Windows paths
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '/var/opt/memos',
+        '__MEMOS_DATA_WINDOWS__'
+      );
 
-        ```sql
-        -- Replace default Docker volume paths with Windows paths
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    '/var/opt/memos',
-                                    '__MEMOS_DATA_WINDOWS__');
-
-        -- Replace remaining POSIX path separators
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path, '/', '\');
-        ```
+      -- Replace remaining POSIX path separators
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '/',
+        '\'
+      );
+      ```
     </TabItem>
+  </Tabs>
+</details>
+<details>
+  <summary>Using relative paths (starting from Memos v0.18.1)</summary>
 
-</Tabs>
+  These queries will replace absolute paths with relative paths.
 
-#### Using relative paths (Memos >= v0.18.1)
+  :::caution[Compatibility]
+    While this method works fine and is simpler (queries work as shown), it will mix path styles
+    in your database if you keep running versions older than v0.18.2, as new assets will be created
+    with absolute paths.
+  :::
 
-These queries will replace absolute paths with relative paths.
+  :::danger[Constraints]
+    - This only works if you have the default prefix `assets` in all your paths.
+    - Assets with relative paths will be resolved relatively
+    to the `MEMOS_DATA` environment variable.
+  :::
 
-:::caution[Compatibility]
-While this method works fine and is simpler (queries work as shown), it will mix path styles
-in your database if you keep running versions older than v0.18.2, as new assets will be created
-with absolute paths.
+  Choose what best suits your scenario:
 
-:::
-
-:::danger[Constraints]
-
-- This only works if you have the default prefix `assets` in all your paths.
-
-- Assets with relative paths will be resolved relatively to the `MEMOS_DATA`
-  environment variable.
-
-:::
-
-Choose what best suits your scenario:
-
-<Tabs>
+  <Tabs>
     <TabItem label="POSIX to POSIX">
-        ```sql
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    SUBSTR(internal_path, 1,
-                                            INSTR(internal_path, '/assets')
-                                    ), '');
-        ```
+      ```sql
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        SUBSTR(
+          internal_path,
+          1,
+          INSTR(
+            internal_path,
+            '/assets'
+          )
+        ),
+        ''
+      );
+      ```
     </TabItem>
     <TabItem label="POSIX to Windows">
-        ```sql
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    SUBSTR(internal_path, 1,
-                                            INSTR(internal_path, '/assets')
-                                    ), '');
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path, '/', '\');
-        ```
+      ```sql
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        SUBSTR(
+          internal_path,
+          1,
+          INSTR(
+            internal_path,
+            '/assets'
+          )
+        ),
+        ''
+      );
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '/',
+        '\'
+      );
+      ```
     </TabItem>
     <TabItem label="Windows to POSIX">
-        ```sql
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path,
-                                    SUBSTR(internal_path, 1,
-                                            INSTR(internal_path, '\assets')
-                                    ), '');
-        UPDATE resource
-        SET internal_path = REPLACE(internal_path, '\', '/');
-        ```
+      ```sql
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        SUBSTR(
+          internal_path,
+          1,
+          INSTR(
+            internal_path,
+            '\assets'
+          )
+        ),
+        ''
+      );
+      UPDATE resource SET internal_path = REPLACE(
+        internal_path,
+        '\',
+        '/'
+      );
+      ```
     </TabItem>
-</Tabs>
+  </Tabs>
+</details>
 
 ### After migration
 
 :::tip[Sanity check]
-Remember to browse the `resource` table and check if the new values in the
-`internal_path` column are adequate to the destination host filesystem.
-
+  Remember to browse the `resource` table and check if the new values in the
+  `internal_path` column are adequate to the destination host filesystem.
 :::
 
 Execute the following query to check the first 100 rows:

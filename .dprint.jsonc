@@ -33,14 +33,15 @@
     "json.lineWidth": 96
   },
   "markdown": {
-    "associations": ["**/*.{astro,md,mdx}"],
+    "associations": ["**/*.{astro,md}"],
     "lineWidth": 96
   },
   // markup_fmt is messing up Astro files formatting, so it's disabled for now.
   // "markup": {
   //   "associations": ["**/*.astro"],
   //   "indentWidth": 2,
-  //   "printWidth": 96
+  //   "printWidth": 96,
+  //   "astroAttrShorthand": true,
   // },
   "prettier": {
     "associations": ["**/*.{css,yml}"],

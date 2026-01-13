@@ -3,12 +3,12 @@ title: Configuration
 description: A guide to Memospot configuration.
 ---
 
+import { Badge } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 :::tip[Did you know?]{icon="pen"}
-
-From v1.0.0, you can configure Memospot via the built-in interface (**Application > Settings**).
-
+  From `v1.0.0`, you can configure Memospot
+  via the built-in interface (**Application > Settings**).
 :::
 
 Memospot behavior can be configured via `memospot.yaml`.
@@ -16,34 +16,34 @@ Memospot behavior can be configured via `memospot.yaml`.
 ## File location
 
 :::tip
-Clicking "**Application > Browse data directory**" will open the folder where the configuration file is located.
+  Clicking "**Application > Browse data directory**" will open the folder where the configuration file is located.
 :::
 
 <Tabs>
-    <TabItem label="Windows">
-        - Explorer/Cmd
-            ```batch
-            %LocalAppData%\memospot\memospot.yaml
-            ```
-        - Powershell
-            ```powershell
-            $Env:LocalAppData\memospot\memospot.yaml
-            ```
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        ```bash
-        ~/.memospot/memospot.yaml
+  <TabItem label="Windows">
+    - Explorer/Cmd
+        ```batch
+        %LocalAppData%\memospot\memospot.yaml
         ```
-        <details>
-            <summary>Optional locations (if moved manually by the user)</summary>
-            ```
-            ~/.config/memospot/memospot.yaml
-            ```
-            ```bash
-            $XDG_CONFIG_HOME/memospot/memospot.yaml
-            ```
-        </details>
-    </TabItem>
+    - Powershell
+        ```powershell
+        $Env:LocalAppData\memospot\memospot.yaml
+        ```
+  </TabItem>
+  <TabItem label="Linux/macOS">
+    ```bash
+    ~/.memospot/memospot.yaml
+    ```
+    <details>
+      <summary>Optional locations (if moved manually by the user)</summary>
+      ```
+      ~/.config/memospot/memospot.yaml
+      ```
+      ```bash
+      $XDG_CONFIG_HOME/memospot/memospot.yaml
+      ```
+    </details>
+  </TabItem>
 </Tabs>
 
 ## Sample configuration file

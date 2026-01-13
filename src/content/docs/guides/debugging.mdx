@@ -6,11 +6,10 @@ description: A guide to Memospot debugging.
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 :::note
-This is intended for developers and advanced users only.
+  This is intended for developers and advanced users only.
 :::
 
-There's a built-in logger that can help diagnose some issues. It will split logs
-into two files:
+There's a built-in logger that can help diagnose some issues. It will split logs into two files:
 
 - `memospot.log`: General application logs.
 - `memos.log`: Logs from the embedded Memos server.
@@ -18,7 +17,11 @@ into two files:
 Log rotation is enabled by default to prevent log files from growing indefinitely.
 
 :::tip
-[yq](https://github.com/mikefarah/yq) is a convenient way to edit configuration files from the command line. It's available at several package managers: Homebrew, MacPorts, Winget, Chocolatey, and Scoop.
+  [yq](https://github.com/mikefarah/yq) is a convenient way to edit configuration
+  files from the command line.
+
+  It's available at several package managers:
+  Homebrew, Winget, Chocolatey, and Scoop.
 :::
 
 ## Enabling logging
@@ -32,16 +35,16 @@ memospot:
 ```
 
 <Tabs syncKey="os">
-    <TabItem label="Windows">
-        ```bash
-        yq -i '.memospot.log.enabled = true' "$Env:LocalAppData\memospot\memospot.yaml"
-        ```
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        ```bash
-        yq -i '.memospot.log.enabled = true' "~/.memospot/memospot.yaml"
-        ```
-    </TabItem>
+  <TabItem label="Windows">
+    ```bash
+    yq -i '.memospot.log.enabled = true' "$Env:LocalAppData\memospot\memospot.yaml"
+    ```
+  </TabItem>
+  <TabItem label="Linux/macOS">
+    ```bash
+    yq -i '.memospot.log.enabled = true' "~/.memospot/memospot.yaml"
+    ```
+  </TabItem>
 </Tabs>
 
 ## Disabling logging
@@ -57,16 +60,16 @@ memospot:
 ```
 
 <Tabs syncKey="os">
-    <TabItem label="Windows">
-        ```bash
-        yq -i '.memospot.log.enabled = false' "$Env:LocalAppData\memospot\memospot.yaml"
-        ```
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        ```bash
-        yq -i '.memospot.log.enabled = false' "~/.memospot/memospot.yaml"
-        ```
-    </TabItem>
+  <TabItem label="Windows">
+    ```bash
+    yq -i '.memospot.log.enabled = false' "$Env:LocalAppData\memospot\memospot.yaml"
+    ```
+  </TabItem>
+  <TabItem label="Linux/macOS">
+    ```bash
+    yq -i '.memospot.log.enabled = false' "~/.memospot/memospot.yaml"
+    ```
+  </TabItem>
 </Tabs>
 
 ## Increasing log level
@@ -79,16 +82,16 @@ root:
 ```
 
 <Tabs syncKey="os">
-    <TabItem label="Windows">
-        ```bash
-        yq -i '.root.level = "debug"' "$Env:LocalAppData\memospot\log.yaml"
-        ```
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        ```bash
-        yq -i '.root.level = "debug"' "~/.memospot/log.yaml"
-        ```
-    </TabItem>
+  <TabItem label="Windows">
+    ```bash
+    yq -i '.root.level = "debug"' "$Env:LocalAppData\memospot\log.yaml"
+    ```
+  </TabItem>
+  <TabItem label="Linux/macOS">
+    ```bash
+    yq -i '.root.level = "debug"' "~/.memospot/log.yaml"
+    ```
+  </TabItem>
 </Tabs>
 
 ## Default `log.yaml`
@@ -155,5 +158,5 @@ Extra configurations options can be found in the
 [log4rs documentation](https://docs.rs/log4rs/latest/log4rs/config/index.html#configuration)
 
 :::note
-`$ENV{MEMOSPOT_DATA}` is a special variable available in `log.yaml` that resolves to the same directory where `memospot.yaml` resides.
+  `$ENV{MEMOSPOT_DATA}` is a special variable available in `log.yaml` that resolves to the same directory where `memospot.yaml` resides.
 :::

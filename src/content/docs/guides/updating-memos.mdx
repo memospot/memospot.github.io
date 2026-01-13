@@ -9,8 +9,8 @@ In general, you should download and install new versions of Memospot when they
 are [released](https://github.com/memospot/memospot/releases). They come bundled with the latest tested Memos server version, being the easiest and safest way to update.
 
 :::tip
-An auto-updater was introduced in Memospot v0.1.7,
-but your mileage may vary depending on your platform and bundle.
+  An auto-updater was introduced in Memospot v0.1.7,
+  but your mileage may vary depending on your platform and bundle.
 :::
 
 ## Standalone update
@@ -18,19 +18,16 @@ but your mileage may vary depending on your platform and bundle.
 While a standalone server update works in most cases, manual updates are
 strongly discouraged for anything other than a **Patch** version release.
 
-:::note
-
-The semantic version scheme used by Memos is `Major.Minor.Patch`.
-
+:::note[Memos version scheme]
+  The semantic version scheme used by Memos is `Major.Minor.Patch`.
 :::
 
 :::caution
-Standalone updates can break things due to database and API changes
-that occur between Major and Minor versions, which Memospot may not yet be prepared to handle.
+  Standalone updates can break things due to database and API changes
+  that occur between Major and Minor versions, which Memospot may not yet be prepared to handle.
 
-If the worst happens, you won't be able to revert the server binary to a
-previous working version without also reverting to a database backup matching the server
-version.
+  If the worst happens, you won't be able to revert the server binary to a previous working
+  version without also reverting to a database backup matching the server version.
 :::
 
 ## Script-aided procedure
@@ -39,44 +36,40 @@ For convenience, there are server updater scripts with auto-backup
 capabilities.
 
 <Tabs>
-    <TabItem label="Windows">
-        Open PowerShell and run the following command:
+  <TabItem label="Windows">
+    Open PowerShell and run the following command:
 
-        ```powershell
-        Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1'))
-        ```
+    ```powershell
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1'))
+    ```
 
-        You can check the script source [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.ps1)
+    You can check the script source [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.ps1)
 
-        :::note
+    :::note
+      You must run PowerShell as Admin if you are using Memospot `MSI` installers,
+      as they do a system-wide installation.
 
-        You must run PowerShell as Admin if you are using Memospot `MSI` installers,
-        as they do a system-wide installation.
+      This is **not** necessary when using the NSIS/exe installer,
+      as it only installs the application for the current user.
+    :::
+  </TabItem>
+  <TabItem label="Linux/macOS">
+    Open a terminal and run the following command:
 
-        This is **not** necessary when using the NSIS/exe installer,
-        as it only installs the application for the current user.
-        :::
-    </TabItem>
-    <TabItem label="Linux/macOS">
-        Open a terminal and run the following command:
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.sh | sudo bash
+    ```
 
-        ```bash
-        curl -fsSL https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.sh | sudo bash
-        ```
+    You can check the script source [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.sh)
 
-        You can check the script source [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.sh)
+    :::tip[Install a specific version]
+      The script can take an optional argument to specify a tag to update to.
 
-        :::tip[Install a specific version]
+      E.g. `[…]memos-server-updater.sh | sudo bash -s v0.25.2`
+    :::
 
-        The script can take an optional argument to specify a tag to update to.
-
-        E.g. `[…]memos-server-updater.sh | sudo bash -s v0.25.2`
-
-        :::
-
-        On Linux, you must run the script with `sudo`, as the Memospot package installs Memos to `/usr/bin/`.
-    </TabItem>
-
+    On Linux, you must run the script with `sudo`, as the Memospot package installs Memos to `/usr/bin/`.
+  </TabItem>
 </Tabs>
 
 ## Manual procedure
@@ -86,93 +79,85 @@ the [memos-builds](https://github.com/memospot/memos-builds/releases) repository
 replace the `memos` binary in the installation folder.
 
 :::danger
+  Do not proceed without taking a backup of your database.
 
-Do not proceed without taking a backup of your database.
-
-Close Memospot, copy the `memos` server binary and the `memos_prod.db`
-database file(s) to a location outside your working scope for extra safety.
-
+  Close Memospot, copy the `memos` server binary and the `memos_prod.db`
+  database file(s) to a location outside your working scope for extra safety.
 :::
 
 Memos location:
 
 <Tabs syncKey="os">
-    <TabItem label="Windows">
-        #### NSIS Installer
-        ```batch
-        %LocalAppData%\Memospot\memos.exe
-        ```
-        ```powershell
-        $Env:LocalAppData\Memospot\memos.exe
-        ```
+  <TabItem label="Windows">
+    #### NSIS Installer
+    ```batch
+    %LocalAppData%\Memospot\memos.exe
+    ```
+    ```powershell
+    $Env:LocalAppData\Memospot\memos.exe
+    ```
 
-        #### MSI Installer
+    #### MSI Installer
 
-        ```batch
-        %ProgramFiles%\Memospot\memos.exe
-        ```
-        ```powershell
-        $Env:ProgramFiles\Memospot\memos.exe
-        ```
-    </TabItem>
-    <TabItem label="macOS">
-        ```bash
-        /Applications/Memospot.app/Contents/MacOS/memos
-        ```
-        :::tip
+    ```batch
+    %ProgramFiles%\Memospot\memos.exe
+    ```
+    ```powershell
+    $Env:ProgramFiles\Memospot\memos.exe
+    ```
+  </TabItem>
+  <TabItem label="macOS">
+    ```bash
+    /Applications/Memospot.app/Contents/MacOS/memos
+    ```
+    :::tip
+      Remember to `chmod +x` the `memos` binary after replacing it.
+      ```bash
+      chmod +x /Applications/Memospot.app/Contents/MacOS/memos
+      ```
+    :::
+  </TabItem>
+  <TabItem label="Linux">
+    ```bash
+    /usr/bin/memos
+    ```
+    :::tip
+      Remember to `chmod +x` the `memos` binary after replacing it.
 
-        Remember to `chmod +x` the `memos` binary after replacing it.
-        ```bash
-        chmod +x /Applications/Memospot.app/Contents/MacOS/memos
-        ```
-
-        :::
-    </TabItem>
-    <TabItem label="Linux">
-        ```bash
-        /usr/bin/memos
-        ```
-        :::tip
-
-        Remember to `chmod +x` the `memos` binary after replacing it.
-
-        ```bash
-        chmod +x /usr/bin/memos
-        ```
-
-        :::
-
-</TabItem>
+      ```bash
+      chmod +x /usr/bin/memos
+      ```
+    :::
+  </TabItem>
 </Tabs>
 
 ### From Memos v0.18.2 to v0.21.0
 
 :::note
-This only applies to this version range, where the web front end wasn't
-embedded in the server binary.
-
+  This only applies to this version range, where the web front end wasn't
+  embedded in the server binary.
 :::
 
 The downloaded build contains a `dist` folder (the web front end). You must
 place it in the appropriate folder:
 
 <Tabs syncKey="os">
-    <TabItem label="Windows">
-        ```batch
-        %LocalAppData%\Memospot
-        ```
-        ```powershell
-        $Env:LocalAppData\Memospot
-        ```
-    </TabItem>
-    <TabItem label="macOS">
-        ```bash
-        $HOME/Library/Application\ Support/com.memospot.app/
-        ```
-    </TabItem>
-    <TabItem label="Linux">
-        ```bash
-        /usr/lib/memospot/
-        ```
-    </TabItem>
+  <TabItem label="Windows">
+    ```batch
+    %LocalAppData%\Memospot
+    ```
+    ```powershell
+    $Env:LocalAppData\Memospot
+    ```
+  </TabItem>
+  <TabItem label="macOS">
+    ```bash
+    $HOME/Library/Application\ Support/com.memospot.app/
+    ```
+  </TabItem>
+  <TabItem label="Linux">
+    ```bash
+    /usr/lib/memospot/
+    ```
+  </TabItem>
 </Tabs>
