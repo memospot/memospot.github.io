@@ -2,6 +2,7 @@
 title: Contributing
 description: A guide to contributing to Memospot.
 ---
+import { FileTree } from '@astrojs/starlight/components';
 import { Icon } from '@astrojs/starlight/components';
 import { Steps } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from "@astrojs/starlight/components";
@@ -336,6 +337,49 @@ cd memospot
 ```
 
 At this point, everything should be ready to go.
+
+## Repository structure
+
+<FileTree>
+
+- build-scripts/
+  - bin/
+    - downloadMemos.ts
+  - …
+- crates
+  - memospot/ (main app code)
+    - i18n/ (localization files)
+      - en/
+        - memospot.ftl
+      - …
+    - src/
+      - lib.rs
+      - …
+    - Tauri.toml
+    - …
+  - …
+- src-ui (Svelte front-end code)
+  - i18n/ (localization files)
+    - en.json
+    - settings.json
+    - …
+  - src/
+    - lib/ (components and utilities)
+      - i18n.ts (localization fallbacks)
+      - …
+    - routes/ (app UI windows)
+      - loader/
+      - settings/
+    - …
+  - …
+- justfile
+- bun.lock
+- Cargo.lock
+- Dockerfile
+- docker-bake.hcl
+- …
+
+</FileTree>
 
 ## Using Just
 
