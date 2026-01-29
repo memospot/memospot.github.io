@@ -68,7 +68,7 @@ memospot
 
 If you encounter this issue, it may be due to a problem with hardware acceleration in your GPU driver. This is a common issue with Linux virtual machines.
 
-Run the app with the WebView acceleration disabled:
+Run the app with the WebView acceleration disabled (software rendering):
 
 ```bash
 WEBKIT_DISABLE_COMPOSITING_MODE=1 memospot
@@ -92,7 +92,7 @@ GDK_BACKEND=x11 memospot
 
 ### Other graphical issues
 
-Run the app disabling the DMABUF renderer:
+Run the app disabling the DMABuf renderer:
 
 ```bash
 WEBKIT_DISABLE_DMABUF_RENDERER=1 memospot

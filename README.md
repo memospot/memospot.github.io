@@ -16,7 +16,7 @@ Memospot landing page and documentation.
 
 ## Project Structure
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+In this project, you'll see the following folders and files:
 
 ```txt
 .
@@ -51,8 +51,8 @@ All commands are run from the root of the project, from a terminal:
 | :-------------------- | :----------------------------------------------- |
 | `bun install`         | Installs dependencies                            |
 | `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
+| `bun build`           | Build the production site to `./dist/`           |
+| `bun preview`         | Preview the build locally, before deploying      |
 | `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `bun astro -- --help` | Get help using the Astro CLI                     |
 
