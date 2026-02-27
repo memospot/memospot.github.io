@@ -39,10 +39,16 @@ capabilities.
     Open PowerShell and run the following command:
 
     ```powershell
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1'))
+    Set-ExecutionPolicy Bypass -Scope Process -Force; & ([ScriptBlock]::Create((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/memospot/memospot/main/memos-server-updater.ps1')))
     ```
 
     You can check the script source [here.](https://github.com/memospot/memospot/blob/main/memos-server-updater.ps1)
+
+    :::tip[Install a specific version]
+      The script can take an optional argument to specify a tag to update to.
+
+      E.g. `[…]memos-server-updater.ps1'))) "v0.25.2"`
+    :::
 
     :::note
       You must run PowerShell as Admin if you are using Memospot `MSI` installers,

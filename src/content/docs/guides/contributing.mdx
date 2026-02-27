@@ -64,9 +64,12 @@ This bypasses the need to setup the tooling on the host OS.
   ```
 
   :::note[sudo]
-    The just recipe is configured to run Docker with sudo, as it’s the standard way to do it.
-
-    For a rootless Docker install, invoke `docker buildx bake [action]`.
+    To avoid invoking `docker` with `sudo --preserve-env`, consider adding yourself to the `docker` user group:
+    ```bash
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+    ```
   :::
 
   or
