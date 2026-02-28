@@ -9,11 +9,11 @@ set windows-shell := ['powershell', '-Command']
 set dotenv-load := true
 
 GIT_WIN := join(env('PROGRAMFILES',''), 'Git','usr','bin')
-PATH := if os() == 'windows' { GIT_WIN +';'+ env('PATH') } else { env('PATH') }
 REPO_ROOT := justfile_directory()
-BIOME_CONFIG_PATH := join(REPO_ROOT,'biome.jsonc')
-DPRINT_CACHE_DIR := join(REPO_ROOT,'.dprint')
-set export
+
+export PATH := if os() == 'windows' { GIT_WIN +';'+ env('PATH') } else { env('PATH') }
+export BIOME_CONFIG_PATH := join(REPO_ROOT,'biome.jsonc')
+export DPRINT_CACHE_DIR := join(REPO_ROOT,'.dprint')
 
 [private]
 [script]

@@ -54,9 +54,7 @@
 .sl-link-button {
     font-family: "Staatliches", system-ui;
     font-size: 1.5em;
-    transition:
-        opacity 150ms ease,
-        transform 150ms ease;
+    transition: opacity 150ms ease, transform 150ms ease;
 }
 .sl-link-button:hover {
     opacity: 0.8;
@@ -83,9 +81,7 @@ h3 {
 }
 
 .sidebar-content li a {
-    transition:
-        opacity 150ms ease,
-        transform 150ms ease;
+    transition: opacity 150ms ease, transform 150ms ease;
 }
 .sidebar-content li a:hover {
     opacity: 0.8;
@@ -94,9 +90,7 @@ h3 {
 
 .card {
     border-radius: 0.5em;
-    transition:
-        opacity 150ms ease,
-        transform 150ms ease;
+    transition: opacity 150ms ease, transform 150ms ease;
 }
 .card:hover {
     border-color: var(--sl-color-accent);
