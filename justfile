@@ -3,28 +3,21 @@
 # Run `just` in the root of the project to see a list of recipes relevant to manual builds.
 
 set script-interpreter := ['bash', '-euo', 'pipefail']
+
 # Backtick commands and recipes without a shebang are executed with the shell set here.
+
 set shell := ['bash', '-c']
 set windows-shell := ['powershell', '-Command']
 set dotenv-load := true
 
-GIT_WIN := join(env('PROGRAMFILES',''), 'Git','usr','bin')
-REPO_ROOT := justfile_directory()
-
-export PATH := if os() == 'windows' { GIT_WIN +';'+ env('PATH') } else { env('PATH') }
-export BIOME_CONFIG_PATH := join(REPO_ROOT,'biome.jsonc')
-export DPRINT_CACHE_DIR := join(REPO_ROOT,'.dprint')
+REPOSITORY := justfile_directory()
+export BIOME_CONFIG_PATH := join(REPOSITORY, 'biome.jsonc')
+export DPRINT_CACHE_DIR := join(REPOSITORY, '.dprint')
 
 [private]
 [script]
 _default:
-    echo "REPO_ROOT is ${REPO_ROOT}"
-    if [ "{{os()}}" = "windows" ]; then
-        git_win="{{replace(GIT_WIN, '\\', '\\\\')}}"
-        echo -e "To use this justfile on Windows, make sure Git is installed under {{BOLD}}{{UNDERLINE}}$git_win{{NORMAL}}."
-        echo -e "{{BOLD}}{{UNDERLINE}}https://git-scm.com/download/win{{NORMAL}}"
-        echo ""
-    fi
+    echo "REPO_ROOT is ${REPOSITORY}"
     deps=(
         bun
         biome
@@ -34,13 +27,12 @@ _default:
     )
     for dep in "${deps[@]}"; do
         if ! command -v "$dep" &> /dev/null; then
-            echo -e "{{RED}}ERROR:{{NORMAL}} Please install {{MAGENTA}}{{BOLD}}{{UNDERLINE}}$dep{{NORMAL}}."
-            echo -e "Try running {{BOLD}}{{UNDERLINE}}just setup{{NORMAL}}."
+            echo -e "{{ RED }}ERROR:{{ NORMAL }} Please install {{ MAGENTA }}{{ BOLD }}{{ UNDERLINE }}$dep{{ NORMAL }}."
             exit 1
         fi
     done
-    echo -e "{{GREEN}}Found project dependencies: ${deps[@]}{{NORMAL}}"
-    echo -e "{{YELLOW}}If you experience any errors, consider updating the related tool.{{NORMAL}}\n"
+    echo -e "{{ GREEN }}Found project dependencies: ${deps[@]}{{ NORMAL }}"
+    echo -e "{{ YELLOW }}If you experience any errors, consider updating the related tool.{{ NORMAL }}\n"
     just --list
 
 [private]
@@ -49,41 +41,41 @@ deps:
 
 [doc('Run in development mode. Use --host to make it accessible on the local network.')]
 dev ARGS='': deps
-    bun astro dev {{ARGS}}
+    bun astro dev {{ ARGS }}
 
-[script]
 [doc('Preview the built page. Use --host to make it accessible on the local network.')]
+[script]
 preview ARGS='':
     bun astro build
-    bun astro preview {{ARGS}}
+    bun astro preview {{ ARGS }}
 
 [doc('Build')]
 build ARGS='': deps
-    bun astro build {{ARGS}}
+    bun astro build {{ ARGS }}
 
-[group('update')]
-[doc('Update project dependencies')]
 [confirm('This will update all dependencies. This should be done carefully. Are you sure?')]
+[doc('Update project dependencies')]
+[group('update')]
 update: update-dprint update-ts
 
-[group('update')]
 [doc('Update dprint plugins')]
+[group('update')]
 update-dprint:
     dprint config update
 
-[group('update')]
 [doc('Update npm packages')]
+[group('update')]
 update-ts:
     bun update
     just fmt
 
-[group('update')]
 [doc('Show outdated npm packages')]
+[group('update')]
 outdated:
     bun outdated
 
-[group('update')]
 [doc('Upgrade bun')]
+[group('update')]
 upgrade:
     bun upgrade
 
@@ -102,67 +94,38 @@ clean:
         test -d "$item" && rm -rf "$item"
     done
 
-[group('lint')]
 [doc('Run all code linters')]
+[group('lint')]
 lint: lint-dprint lint-ts
 
-[group('lint')]
 [doc('Check code formatting')]
+[group('lint')]
 lint-dprint:
     dprint check
 
-[group('lint')]
 [doc('Lint TypeScript code with BiomeJS')]
+[group('lint')]
 lint-ts:
     bun x @biomejs/biome ci --css-parse-tailwind-directives=true .
 
-[group('fix')]
-[doc('Run all code fixes')]
-fix: fix-ts
-
-[group('fix')]
 [doc('Run BiomeJS safe fixes')]
+[group('fix')]
 [script]
-fix-ts:
+fix:
     cd ./src || exit 1
     if ls *.ts 1> /dev/null 2>&1; then
         bun x @biomejs/biome lint --write .
     fi
 
-[group('format')]
 [doc('Format code with dprint (json, yaml, astro, css, javascript/typescript and markdown).')]
+[group('format')]
 fmt:
     dprint fmt --diff
 
-[doc('Run all recommended pre-commit checks')]
-pre-commit: fmt lint
+[doc('Do a full validation before pushing')]
+validate: fmt lint build
 
-[group('maintainer')]
 [doc('Delete all GitHub Actions cache')]
+[group('maintainer')]
 gh-clean-cache:
     gh cache delete --all
-
-[group('maintainer')]
-[doc('Bump version in package.json')]
-[script]
-bumpversion VERSION:
-    clean="{{trim_start_match(VERSION, "v")}}"
-    jq --arg version "$clean" '.version = $version' "./package.json" > "./package.json.tmp" && mv "./package.json.tmp" "./package.json"
-    just fmt
-    bun install --lockfile-only
-    git add ./package.json
-    git commit -m "chore: bump version to v$clean"
-
-[group('maintainer')]
-[doc('Push a new tag to the repository')]
-[script]
-pushtag TAG:
-    clean="{{trim_start_match(TAG, "v")}}"
-    git tag -a "v$clean" -m "chore: push v$clean"
-    git push origin --tags
-
-[group('maintainer')]
-[doc('Publish a new version (bumpversion + pushtag)')]
-publish TAG:
-    just bumpversion {{TAG}}
-    just pushtag {{TAG}}

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Memospot Application Issues
+    url: https://github.com/memospot/memospot/issues/new/choose
+    about: Report bugs or request features for the Memospot application itself (not Documentation or Memos-related)
+  - name: Memos Server Issues
+    url: https://github.com/usememos/memos/issues/new/choose
+    about: Report bugs or request features for the Memos server (not Memospot-related)

@@ -10,6 +10,6 @@
     }
   },
   "file_types": {
-    "GitHub Actions": [".github/workflows/*.yml", ".github/workflows/*.yaml"]
+    "GitHub Actions": [".github/workflows/*.yml"]
   }
 }

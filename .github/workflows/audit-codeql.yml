@@ -4,13 +4,13 @@ on:
   merge_group:
   push:
     paths:
-      - "**/*.{astro,mjs,ts}"
+      - "**/*.{astro,ts}"
       - "**/audit-codeql.yml"
       - "**/bun.lock"
       - "**/package.json"
   pull_request:
     paths:
-      - "**/*.{astro,mjs,ts}"
+      - "**/*.{astro,ts}"
       - "**/audit-codeql.yml"
       - "**/bun.lock"
       - "**/package.json"

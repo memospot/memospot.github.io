@@ -1,6 +1,6 @@
-name: Bug Report
-description: Create a report to help us improve
-labels: [bug]
+name: Documentation Issue
+description: Report a typo, broken link, or incorrect information
+labels: [documentation, bug]
 body:
   - type: markdown
     attributes:
@@ -8,22 +8,25 @@ body:
         If you are reporting a new issue, make sure that we do not have any duplicates already open. You can ensure this by searching the issue list for this repository. If there is a duplicate, please close your issue and add a comment to the existing issue instead.
   - type: textarea
     attributes:
-      label: Describe the bug
+      label: Describe the issue
       description: |
-        Briefly describe the problem you are having in a few paragraphs.
+        Briefly describe the typo, broken link, formatting problem, or incorrect information.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Page URL or File Path
+      description: |
+        Where did you find this issue?
+      placeholder: |
+        https://memospot.github.io/...
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Steps to reproduce
+      label: Suggested fix (optional)
       description: |
-        Provide the steps to reproduce the issue.
-      placeholder: |
-        1. Go to '...'
-        2. Click on '....'
-        3. See error
-    validations:
-      required: true
+        If you know how to fix it, please describe the proposed change here.
   - type: textarea
     attributes:
       label: Screenshots or additional context

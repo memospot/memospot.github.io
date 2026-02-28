@@ -4,13 +4,13 @@ on:
   merge_group:
   pull_request:
     paths:
-      - "**/*.{astro,mjs,ts}"
+      - "**/*.{astro,ts}"
       - "**/bun.lock"
       - "**/check-typescript.yml"
       - "**/package.json"
   push:
     paths:
-      - "**/*.{astro,mjs,ts}"
+      - "**/*.{astro,ts}"
       - "**/bun.lock"
       - "**/check-typescript.yml"
       - "**/package.json"
