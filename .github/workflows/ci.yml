@@ -25,6 +25,8 @@ jobs:
     name: Check formatting with dprint
     runs-on: ubuntu-latest
     continue-on-error: true
+    env:
+      DPRINT_CACHE_DIR: ${{github.workspace}}/.dprint
     steps:
       - name: Ensure LF line endings
         run: |
@@ -49,8 +51,6 @@ jobs:
           restore-keys: cache-dprint-plugins
 
       - name: Check formatting
-        env:
-          DPRINT_CACHE_DIR: ${{github.workspace}}/.dprint
         run: dprint check
 
   lint:
