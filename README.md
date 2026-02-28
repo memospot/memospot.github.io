@@ -28,7 +28,7 @@ In this project, you'll see the following folders and files:
 │   │   └── docs/          (Mdx files for documentation)
 │   ├── styles/            (CSS styles)
 │   └── content.config.ts  (Controls how content is loaded and displayed)
-├── astro.config.mjs       (Astro configuration. Contains the sidebar links.)
+├── astro.config.ts        (Astro configuration. Contains the sidebar links.)
 └── justfile               (Task runner file with common commands)
 ```
 

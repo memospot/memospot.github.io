@@ -11,7 +11,10 @@ indent_style = space
 [*.css]
 indent_size = 4
 
-[*.{mjs,js,ts}]
+[*.justfile]
+indent_size = 4
+
+[*.{js,ts}]
 indent_size = 4
 
 [*.{astro,md,mdx}]
