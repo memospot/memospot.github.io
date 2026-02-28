@@ -24,7 +24,6 @@ jobs:
   fmt:
     name: Check formatting with dprint
     runs-on: ubuntu-latest
-    continue-on-error: true
     env:
       DPRINT_CACHE_DIR: ${{github.workspace}}/.dprint
     steps:
@@ -55,7 +54,6 @@ jobs:
 
   lint:
     name: TypeScript lint
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
