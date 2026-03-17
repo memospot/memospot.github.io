@@ -11,5 +11,20 @@
   },
   "file_types": {
     "GitHub Actions": [".github/workflows/*.yml"]
+  },
+  "languages": {
+    "TypeScript": {
+      "language_servers": ["biome", "!eslint", "!prettier"]
+    }
+  },
+  "lsp": {
+    "markdownlint": {
+      "settings": {
+        "MD013": false,
+        "MD028": false,
+        "MD033": false,
+        "MD041": false
+      }
+    }
   }
 }

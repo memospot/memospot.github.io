@@ -21,7 +21,7 @@
     // https://github.com/dprint/dprint-plugin-markdown/releases
     "https://plugins.dprint.dev/markdown-0.21.1.wasm@064467750514c9ce5192b375582d762ec64cb3ba99673413fa86645d50406279",
     // https://github.com/g-plane/markup_fmt/releases
-    // "https://plugins.dprint.dev/g-plane/markup_fmt-v0.26.0.wasm",
+    // "https://plugins.dprint.dev/g-plane/markup_fmt-v0.26.0.wasm@1fb1c5898b0cc4b7ec6eb4952878ebada7b8ef19dcc293b59f614538d319da85",
     // https://github.com/g-plane/pretty_yaml/releases
     "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.6.0.wasm@40a2fdda7040317eb1b23520f3a00769a5571eedb049c4ca9175c1b9eeba01ae"
   ],
