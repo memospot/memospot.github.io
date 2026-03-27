@@ -20,7 +20,7 @@
     "@fontsource-variable/tilt-neon": "5.2.10",
     "@fontsource/staatliches": "5.2.8",
     "@tailwindcss/vite": "4.1.18",
-    "astro": "5.16.6",
+    "astro": "5.18.1",
     "sharp": "0.34.5",
     "starlight-changelogs": "0.3.0",
     "starlight-image-zoom": "0.13.2",
