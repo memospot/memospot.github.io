@@ -15,7 +15,7 @@ export const collections = {
                     "https://raw.githubusercontent.com/memospot/memospot/refs/heads/main/CHANGELOG.md",
                 process: ({ title }) => {
                     if (title.includes("Unreleased")) return;
-                    return title;
+                    return title.replace("[", "").replace("]", "");
                 }
             }
         ])
