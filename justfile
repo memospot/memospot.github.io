@@ -10,7 +10,7 @@ set shell := ['bash', '-c']
 set windows-shell := ['powershell', '-Command']
 set dotenv-load := true
 
-REPOSITORY := justfile_directory()
+export REPOSITORY := justfile_directory()
 export BIOME_CONFIG_PATH := join(REPOSITORY, 'biome.jsonc')
 export DPRINT_CACHE_DIR := join(REPOSITORY, '.dprint')
 
