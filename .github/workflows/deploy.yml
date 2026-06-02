@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install, build, and upload the website
-        uses: withastro/action@v6.1.0
+        uses: withastro/action@v6.1.1
 
   deploy:
     needs: build
