@@ -8,9 +8,14 @@ dist/
 # dependencies
 node_modules/
 
-# environment variables
+# Env
 .env
-.env.*
+.env.local
 
-# macOS-specific files
+# OS
 .DS_Store
+Thumbs.db
+
+# Agent tooling
+!AGENTS.md
+!.agents/**
