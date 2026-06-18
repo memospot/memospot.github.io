@@ -68,4 +68,4 @@ For consistency with the parent project, a `justfile` is also provided with simi
 
 ## Contributing
 
-Contributions are welcome! Please read the [contribution guide](https://memospot.github.io/guides/contributing/) for extra details.
+Please read the [contribution guide](https://memospot.github.io/guides/contributing/) for extra details.
