@@ -13,8 +13,20 @@
     "GitHub Actions": [".github/workflows/*.yml"]
   },
   "languages": {
+    "JavaScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
     "TypeScript": {
-      "language_servers": ["biome", "!eslint", "!prettier"]
+      "language_servers": ["biome", "!eslint", "!prettier"],
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
     }
   },
   "lsp": {
