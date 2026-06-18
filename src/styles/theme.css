@@ -39,18 +39,6 @@
     padding: 0.7em;
 }
 
-.header {
-    .site-title {
-        text-transform: lowercase;
-        font-size: 2.5em;
-        font-weight: 400;
-        font-family: "Tilt Neon Variable", system-ui;
-    }
-    svg {
-        color: var(--sl-color-white);
-    }
-}
-
 .sl-link-button {
     font-family: "Staatliches", system-ui;
     font-size: 1.5em;
@@ -77,6 +65,18 @@ h3 {
     font-size: 1.7rem;
     svg {
         margin-top: -0.3em;
+    }
+}
+
+.header {
+    .site-title {
+        text-transform: lowercase;
+        font-size: 2.5em;
+        font-weight: 400;
+        font-family: "Tilt Neon Variable", system-ui;
+    }
+    svg {
+        color: var(--sl-color-white);
     }
 }
 
