@@ -1,3 +1,4 @@
+import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -7,6 +8,7 @@ import starlightImageZoom from "starlight-image-zoom";
 // https://astro.build/config
 export default defineConfig({
     base: "",
+    site: "https://memospot.github.io",
     integrations: [
         starlight({
             plugins: [starlightChangelogs(), starlightImageZoom()],
@@ -68,7 +70,8 @@ export default defineConfig({
                     ]
                 }
             ]
-        })
+        }),
+        sitemap()
     ],
     vite: {
         plugins: [tailwindcss()]
