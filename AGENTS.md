@@ -44,7 +44,3 @@ Single checks:
 - Astro files disable Biome rules `noUnusedVariables`, `noUnusedImports`, `useConst`, `useImportType` — see `biome.jsonc` overrides.
 - `markup_fmt` dprint plugin disabled — it breaks Astro formatting.
 - Tailwind CSS v4 via `@tailwindcss/vite` — no `tailwind.config.*`; styles in `src/styles/`.
-
-## Skills
-
-- `chores` (`.agents/skills/chores/SKILL.md`) — dep bumps and maintenance. Load when asked to update packages or dprint plugins.

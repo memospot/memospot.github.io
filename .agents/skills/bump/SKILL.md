@@ -1,7 +1,7 @@
 ---
-name: chores
-description: "Chores for this repo. Triggers: npm/Bun version bumps, dprint plugin updates."
-disable-model-invocation: false
+name: bump
+description: Version bump checklists for npm/Bun and dprint plugins.
+disable-model-invocation: true
 user-invocable: true
 ---
 
