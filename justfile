@@ -125,6 +125,9 @@ fmt:
 [doc('Do a full validation before pushing')]
 validate: fmt lint build
 
+@quick-validate:
+    just validate >/dev/null && echo "All validations passed." || echo "ERROR. Run 'just validate' for more details."
+
 [doc('Delete all GitHub Actions cache')]
 [group('maintainer')]
 gh-clean-cache:
