@@ -1,6 +1,6 @@
 ---
 name: chores
-description: Handle repeatable repository maintenance chores. Use when the user asks for version bumps, updates or similar.
+description: "Chores for this repo. Triggers: npm/Bun version bumps, dprint plugin updates."
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -9,32 +9,29 @@ user-invocable: true
 
 ## Bun package bumps
 
-Use these steps when asked to bump Bun/npm package versions.
-
-1. Check the latest version of the package
+1. Check outdated packages
 
    ```bash
    bun outdated
    ```
 
-   > This automatically enforces the `minimumReleaseAge` from `bunfig.toml`.
+   > `minimumReleaseAge` from `bunfig.toml` is enforced automatically.
 
-2. Update each package with the version shown in the "Latest" column:
+2. Update each package to the version shown in the "Latest" column
 
    ```bash
    bun update {package}@{version}
    ```
 
-   > This will properly update the package version in `package.json` and `bun.lock`.
-   > Do not update by editing `package.json` directly.
+   > Do NOT edit `package.json` directly — `bun update` handles both `package.json` and `bun.lock`.
 
-3. Validate
+3. Validate — build must pass clean
 
    ```bash
    bun run build
    ```
 
-   Inspect the output for errors or warnings. Solve them if possible.
+   **Done when**: build succeeds with no new errors or warnings. If a warning has an upstream cause, leave a TODO and proceed.
 
 ## Dprint plugin bumps
 
@@ -50,15 +47,16 @@ Use these steps when asked to bump Bun/npm package versions.
    dprint check
    ```
 
+   **Done when**: zero formatting differences reported.
+
 ## Commit
 
-IF everything works and a commit is requested, use a short commit message in this format:
-
-    ````text
-    chore(deps): bump {npm/dprint} deps
-
-    - {package}: {old version} to {new version}
-    - {package}: {old version} to {new version}
-    ```
-
+When a commit is requested, use short messages in this format.
 Split npm and dprint updates into separate commits.
+
+```text
+chore(deps): bump {npm/dprint} deps
+
+- {package}: {old version} to {new version}
+- {package}: {old version} to {new version}
+```
