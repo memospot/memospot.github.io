@@ -120,13 +120,14 @@ fix:
 [doc('Format code with dprint (json, yaml, astro, css, javascript/typescript and markdown).')]
 [group('format')]
 fmt:
-    dprint fmt --diff
+    dprint fmt
 
 [doc('Do a full validation before pushing')]
 validate: fmt lint build
 
-@quick-validate:
-    just validate >/dev/null && echo "All validations passed." || echo "ERROR. Run 'just validate' for more details."
+# Concise version of validate
+@gate:
+    just validate >/dev/null 2>&1 && echo "[OK] All validations passed." || echo "[ERROR] Run 'just validate' for more details."
 
 [doc('Delete all GitHub Actions cache')]
 [group('maintainer')]

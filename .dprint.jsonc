@@ -8,12 +8,14 @@
     "**/dist/*",
     "**/node_modules/*"
   ],
-  "includes": ["**/*.{astro,css,json,jsonc,md,mdx,ts,yml}"],
+  "includes": ["**/*.{astro,css,json,jsonc,md,mdx,ts,yml}", "**/justfile"],
   "lineWidth": 96,
   "indentWidth": 4,
   "plugins": [
     // DO NOT USE PRETTIER WASM. It bypasses the include rules and will mess things up.
     //
+    // https://github.com/dprint/dprint-plugin-exec/releases
+    "https://plugins.dprint.dev/exec-0.7.2.json@6c30bd00dfb176774ece412d0fbf149478269ecc92c55ab2d6f4116938ed993e",
     // https://github.com/dprint/dprint-plugin-biome/releases
     "https://plugins.dprint.dev/biome-0.13.0.wasm@1d7e083a32ce1a2a9a7043dda1a1b2e905aaed56b54843a4d09efe539473d903",
     // https://github.com/g-plane/malva/releases
@@ -25,6 +27,17 @@
     // https://github.com/g-plane/pretty_yaml/releases
     "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.6.0.wasm@40a2fdda7040317eb1b23520f3a00769a5571eedb049c4ca9175c1b9eeba01ae"
   ],
+  "exec": {
+    "commands": [
+      {
+        "cwd": "${configDir}",
+        "command": "just --dump --justfile {{file_path}}",
+        "stdin": false,
+        "fileNames": "justfile",
+        "exts": ["justfile"]
+      }
+    ]
+  },
   "biome": {
     "associations": ["**/*.{js,json,jsonc,ts}"],
     "indentStyle": "space",
