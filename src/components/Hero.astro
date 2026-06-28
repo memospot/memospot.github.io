@@ -1,71 +1,83 @@
 ---
-import { Image } from 'astro:assets';
-import { LinkButton } from '@astrojs/starlight/components';
-import { Zoom } from 'starlight-image-zoom/components'
+import { Image } from "astro:assets";
+import { LinkButton } from "@astrojs/starlight/components";
+import { Zoom } from "starlight-image-zoom/components";
 
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 const imageAttrs = {
-  loading: 'eager' as const,
-  decoding: 'async' as const,
-  alt: image?.alt || '',
-  layout: 'fixed',
-
+    loading: "eager" as const,
+    decoding: "async" as const,
+    alt: image?.alt || "",
+    layout: "fixed"
 } as const;
 
 let darkImage: ImageMetadata | undefined;
 let lightImage: ImageMetadata | undefined;
 let rawHtml: string | undefined;
 if (image) {
-  if ('file' in image) {
-    darkImage = image.file;
-  } else if ('dark' in image) {
-    darkImage = image.dark;
-    lightImage = image.light;
-  } else   {
-    rawHtml = image.html;
-  }
+    if ("file" in image) {
+        darkImage = image.file;
+    } else if ("dark" in image) {
+        darkImage = image.dark;
+        lightImage = image.light;
+    } else {
+        rawHtml = image.html;
+    }
 }
 ---
 
 <div class="hero grid items-center gap-4 pb-4 md:grid-cols-[7fr_4fr] md:gap-[3%] md:py-[clamp(2.5rem,calc(1rem+10vmin),10rem)]">
   <div class="flex flex-col gap-[clamp(1.5rem,calc(1.5rem+1vw),2rem)] text-center md:text-left">
     <div class="flex flex-col gap-4 items-center md:items-start">
-      <h1 id="_top" class="max-w-[50ch] text-5xl! leading-tight font-semibold text-(--sl-color-white)" data-page-title set:html={title} />
-      {tagline && <div class="max-w-[50ch] text-xl text-(--sl-color-gray-2)" set:html={tagline} />}
+      <h1
+        id="_top"
+        class="max-w-[50ch] text-5xl! leading-tight font-semibold text-(--sl-color-white)"
+        data-page-title
+        set:html={title}
+      />
+      {tagline && (
+        <div class="max-w-[50ch] text-xl text-(--sl-color-gray-2)" set:html={tagline} />
+      )}
     </div>
-    {
-      actions.length > 0 && (
-        <div class="flex gap-y-4 gap-x-8 flex-wrap justify-center md:justify-start">
-          {actions.map(
-            ({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
-              <LinkButton {href} {variant} icon={icon?.name} class:list={[className]} {...attrs}>
-                {text}
-                {icon?.html && <Fragment set:html={icon.html} />}
-              </LinkButton>
-            )
-          )}
-        </div>
-      )
-    }
+    {actions.length > 0 && (
+      <div class="flex gap-y-4 gap-x-8 flex-wrap justify-center md:justify-start">
+        {actions.map(
+            ({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) =>
+        (
+                  <LinkButton
+                    {href}
+                    {variant}
+                    icon={icon?.name}
+                    class:list={[className]}
+                    {...attrs}
+                  >
+                    {text}
+                    {icon?.html && <Fragment set:html={icon.html} />}
+                  </LinkButton>
+                )
+        )}
+      </div>
+    )}
   </div>
-  {
-    darkImage && (
-      <div class="sl-dark">
-        <Zoom label={imageAttrs.alt}>
-          <Image src={darkImage} {...imageAttrs} />
-        </Zoom>
-      </div>
-    )
-  }
-  {
-    lightImage && (
-      <div class="sl-light">
-        <Zoom label={imageAttrs.alt}>
-          <Image src={lightImage} {...imageAttrs} />
-        </Zoom>
-      </div>
-    )
-  }
-  {rawHtml && <div class="mx-auto w-[min(70%,20rem)] md:order-2 md:w-[min(100%,25rem)]" set:html={rawHtml} />}
+  {darkImage && (
+    <div class="sl-dark">
+      <Zoom label={imageAttrs.alt}>
+        <Image src={darkImage} {...imageAttrs} />
+      </Zoom>
+    </div>
+  )}
+  {lightImage && (
+    <div class="sl-light">
+      <Zoom label={imageAttrs.alt}>
+        <Image src={lightImage} {...imageAttrs} />
+      </Zoom>
+    </div>
+  )}
+  {rawHtml && (
+    <div
+      class="mx-auto w-[min(70%,20rem)] md:order-2 md:w-[min(100%,25rem)]"
+      set:html={rawHtml}
+    />
+  )}
 </div>

@@ -2,6 +2,9 @@
 //
 // For a full list of overridable settings, and general information on folder-specific settings,
 // see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+//
+// For the best development experience with this project, install the following extensions:
+// - https://zed.dev/extensions/astro
 {
   "format_on_save": "on",
   "formatter": {
@@ -14,6 +17,14 @@
     "GitHub Actions": [".github/workflows/*.yml"]
   },
   "languages": {
+    "Astro": {
+      "formatter": {
+        "external": {
+          "command": "dprint",
+          "arguments": ["fmt", "--config", ".dprint.jsonc", "--stdin", "{buffer_path}"]
+        }
+      }
+    },
     "JavaScript": {
       "formatter": { "language_server": { "name": "biome" } },
       "code_actions_on_format": {
@@ -31,6 +42,7 @@
     }
   },
   "lsp": {
+    "astro-language-server": {},
     "markdownlint": {
       "settings": {
         "MD013": false,

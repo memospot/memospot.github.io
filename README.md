@@ -1,5 +1,9 @@
 # memospot.github.io
 
+[![CodeQL](https://github.com/memospot/memospot.github.io/actions/workflows/audit-codeql.yml/badge.svg)](https://github.com/memospot/memospot.github.io/actions/workflows/audit-codeql.yml)
+[![CI](https://github.com/memospot/memospot.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/memospot/memospot.github.io/actions/workflows/ci.yml)
+[![Deployment](https://github.com/memospot/memospot.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/memospot/memospot.github.io/actions/workflows/deploy.yml)
+
 Memospot landing page and documentation.
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build) [![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/memospot/memospot.github.io)
