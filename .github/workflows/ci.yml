@@ -35,11 +35,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Install Just
+        uses: jaxxstorm/action-install-gh-release@25e24d2d23ae098373794ef1d6faecb48ee52da8
+        with:
+          repo: casey/just
+          tag: 1.54.0
+          cache: enable
+
       - name: Install dprint
         uses: jaxxstorm/action-install-gh-release@25e24d2d23ae098373794ef1d6faecb48ee52da8
         with:
           repo: dprint/dprint
-          tag: 0.54.0
+          tag: 0.55.1
           cache: enable
 
       - name: Cache dprint plugins
