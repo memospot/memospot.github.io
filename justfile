@@ -8,7 +8,7 @@ set script-interpreter := ['bash', '-euo', 'pipefail']
 
 set shell := ['bash', '-c']
 set windows-shell := ['powershell', '-Command']
-set dotenv-load := true
+set dotenv-load
 
 export REPOSITORY := justfile_directory()
 export BIOME_CONFIG_PATH := join(REPOSITORY, 'biome.jsonc')
