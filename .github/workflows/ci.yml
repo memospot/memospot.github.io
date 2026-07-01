@@ -33,7 +33,7 @@ jobs:
           git config --global core.eol lf
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Install Just
         uses: taiki-e/install-action@9bcaee1dcae34154180f412e2fa69355a7cda9f6 # 2.82.6
@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
