@@ -1,13 +1,24 @@
 name: Issue Translator
 on:
-  issue_comment: { types: [created] }
-  issues: { types: [opened] }
-  workflow_dispatch:
+  issue_comment:
+    types:
+      - created
+  issues:
+    types:
+      - opened
 
 jobs:
-  build:
+  translate:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - uses: usthe/issues-translate-action@b41f55ddc81d7d54bd542a4f289fe28ec081898e
         with:
           # Decide whether to modify the issue title

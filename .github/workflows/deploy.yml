@@ -2,7 +2,7 @@ name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths:
       - .github/workflows/deploy.yml
       - src/**
@@ -11,10 +11,6 @@ on:
       - bun.lock
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  pages: write
-
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -22,22 +18,40 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Authenticate to Pages; required by withastro/action.
+      pages: write # Upload the Pages artifact; required by withastro/action.
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - name: Checkout repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Install, build, and upload the website
-        uses: withastro/action@v6.1.1
+        uses: withastro/action@b7d53628f8b666036b0238aadb0b984a2a489f26 # v6.1.1
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Authenticate to Pages; required by actions/deploy-pages.
+      pages: write # Deploy the Pages artifact; required by actions/deploy-pages.
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5

@@ -5,10 +5,7 @@
 set script-interpreter := ['bash', '-euo', 'pipefail']
 
 # Backtick commands and recipes without a shebang are executed with the shell set here.
-
 set shell := ['bash', '-c']
-set windows-shell := ['powershell', '-Command']
-set dotenv-load
 
 export REPOSITORY := justfile_directory()
 export BIOME_CONFIG_PATH := join(REPOSITORY, 'biome.jsonc')
@@ -23,7 +20,6 @@ _default:
         biome
         dprint
         git
-        jq
     )
     for dep in "${deps[@]}"; do
         if ! command -v "$dep" &> /dev/null; then
@@ -39,47 +35,62 @@ _default:
 deps:
     bun install
 
-[doc('Run in development mode. Use --host to make it accessible on the local network.')]
+# Install prek Git hooks (run once after clone)
+hooks:
+    #!/usr/bin/env bash
+    if ! command -v prek &> /dev/null; then
+        echo -e "{{ RED }}ERROR:{{ NORMAL }} prek is not installed."
+        echo -e "Install it with: {{ MAGENTA }}brew install prek{{ NORMAL }}"
+        exit 1
+    fi
+    prek install --prepare-hooks
+    echo -e "{{ GREEN }}Git hooks installed.{{ NORMAL }}"
+
+# Run prek hooks on all files
+hooks-run:
+    prek run --all-files
+
+# Run in development mode. Use --host to make it accessible on the local network.
 dev ARGS='': deps
     bun astro dev {{ ARGS }}
 
-[doc('Preview the built page. Use --host to make it accessible on the local network.')]
+# Preview the built page. Use --host to make it accessible on the local network.
 [script]
 preview ARGS='':
     bun astro build
     bun astro preview {{ ARGS }}
 
-[doc('Build')]
+# Build
 build ARGS='': deps
     bun astro build {{ ARGS }}
 
+# Update project dependencies
 [confirm('This will update all dependencies. This should be done carefully. Are you sure?')]
-[doc('Update project dependencies')]
 [group('update')]
 update: update-dprint update-ts
 
-[doc('Update dprint plugins')]
+# Update dprint plugins
 [group('update')]
 update-dprint:
     dprint config update
 
-[doc('Update npm packages')]
+# Update npm packages
 [group('update')]
 update-ts:
     bun update
     just fmt
 
-[doc('Show outdated npm packages')]
+# Show outdated npm packages
 [group('update')]
 outdated:
     bun outdated
 
-[doc('Upgrade bun')]
+# Upgrade bun
 [group('update')]
 upgrade:
     bun upgrade
 
-[doc('Clean project artifacts')]
+# Clean project artifacts
 [script]
 clean:
     set +e
@@ -94,42 +105,38 @@ clean:
         test -d "$item" && rm -rf "$item"
     done
 
-[doc('Run all code linters')]
+# Run all code linters
 [group('lint')]
 lint: lint-dprint lint-ts
 
-[doc('Check code formatting')]
+# Check code formatting
 [group('lint')]
 lint-dprint:
     dprint check
 
-[doc('Lint TypeScript code with BiomeJS')]
+# Lint TypeScript code with BiomeJS
 [group('lint')]
 lint-ts:
     bun x @biomejs/biome ci --css-parse-tailwind-directives=true .
 
-[doc('Run BiomeJS safe fixes')]
+# Run BiomeJS safe fixes
 [group('fix')]
-[script]
 fix:
-    cd ./src || exit 1
-    if ls *.ts 1> /dev/null 2>&1; then
-        bun x @biomejs/biome lint --write .
-    fi
+    bun x @biomejs/biome lint --write .
 
-[doc('Format code with dprint (json, yaml, astro, css, javascript/typescript and markdown).')]
+# Format code with dprint (json, yaml, astro, css, javascript/typescript and markdown)
 [group('format')]
 fmt:
     dprint fmt
 
-[doc('Do a full validation before pushing')]
-validate: fmt lint build
+# Do a full validation before pushing
+validate: lint-dprint lint build
 
 # Concise version of validate
 @gate:
     just validate >/dev/null 2>&1 && echo "[OK] All validations passed." || echo "[ERROR] Run 'just validate' for more details."
 
-[doc('Delete all GitHub Actions cache')]
+# Delete all GitHub Actions cache
 [group('maintainer')]
 gh-clean-cache:
     gh cache delete --all

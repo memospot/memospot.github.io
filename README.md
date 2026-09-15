@@ -15,7 +15,7 @@ Memospot landing page and documentation.
 - [MDX](https://mdxjs.com/) - Markdown with embedded JSX components
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Bun](https://bun.sh/) - JavaScript runtime and package manager
-- [Biome](https://biomejs.dev/) - Linter and code formatter
+- [Biome](https://biomejs.dev/) - Linter (formatting is handled by dprint)
 - [dprint](https://dprint.dev/) - Code formatting
 
 ## Project Structure
@@ -42,10 +42,11 @@ In this project, you'll see the following folders and files:
 brew install \
   oven-sh/bun/bun \
   dprint \
-  biome \
   just \
-  jq
+  prek
 ```
+
+Biome is managed as a project dependency and installed with `bun install`.
 
 ## Commands
 
@@ -55,7 +56,7 @@ All commands are run from the root of the project, from a terminal:
 | :-------------------- | :----------------------------------------------- |
 | `bun install`         | Installs dependencies                            |
 | `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build the production site to `./dist/`           |
+| `bun run build`       | Build the production site to `./dist/`           |
 | `bun preview`         | Preview the build locally, before deploying      |
 | `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `bun astro -- --help` | Get help using the Astro CLI                     |
@@ -72,4 +73,6 @@ For consistency with the parent project, a `justfile` is also provided with simi
 
 ## Contributing
 
-Please read the [contribution guide](https://memospot.github.io/guides/contributing/) for extra details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, Git hooks, and the checks to
+run before pushing. The [site's contribution guide](https://memospot.github.io/guides/contributing/)
+covers the Memospot application itself.

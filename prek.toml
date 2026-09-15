@@ -1,0 +1,66 @@
+# prek configuration for memospot.github.io.
+#
+# After editing this file, run:
+#   prek validate-config
+#   prek run --all-files
+# Install the Git shims with:
+#   prek install --prepare-hooks
+
+# Offline, zero-setup hygiene checks (Rust-native, no network needed).
+[[repos]]
+repo = "builtin"
+hooks = [
+    # Fixers run first, sequentially in listing order.
+    { id = "trailing-whitespace", args = ["--markdown-linebreak-ext=md", "--markdown-linebreak-ext=mdx"] },
+    { id = "end-of-file-fixer" },
+    { id = "fix-byte-order-marker" },
+    { id = "mixed-line-ending", args = ["--fix=lf"] },
+    # Read-only checks.
+    { id = "check-merge-conflict" },
+    { id = "check-case-conflict" },
+    { id = "check-illegal-windows-names" },
+    { id = "check-added-large-files" },
+    { id = "detect-private-key" },
+    { id = "check-yaml" },
+    { id = "check-toml" },
+    { id = "check-json", exclude = "^\\.zed/settings\\.json$" },
+    { id = "check-jsonc" },
+    {
+        id = "check-jsonc",
+        name = "check jsonc (zed settings)",
+        description = "Check comment-carrying JSON files (e.g. .zed/settings.json) as JSONC.",
+        files = "^\\.zed/settings\\.json$",
+        types = ["json"],
+    },
+]
+
+# --- GitHub Actions security ---
+
+[[repos]]
+repo = "https://github.com/zizmorcore/zizmor-pre-commit"
+rev = "v1.30.1"
+hooks = [{ id = "zizmor", args = ["--no-progress", "--offline"] }]
+
+# Project linters, mirroring the canonical `just` recipes so flags stay
+# in one place. They run the full-repo check when a relevant file is staged.
+# js/mjs trigger both hooks; dprint formats only the types listed in .dprint.jsonc.
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "dprint-check"
+name = "dprint check"
+description = "Check formatting with dprint (run `just fmt` to fix)."
+language = "system"
+entry = "just lint-dprint"
+files = "(^|/)justfile$|\\.astro$|\\.css$|\\.js$|\\.json$|\\.jsonc$|\\.md$|\\.mdx$|\\.mjs$|\\.ts$|\\.yml$"
+pass_filenames = false
+
+[[repos.hooks]]
+id = "biome-lint"
+name = "biome lint"
+description = "Lint with Biome (same check as `just lint-ts`)."
+language = "system"
+entry = "just lint-ts"
+files = "\\.(astro|css|js|mjs|json|jsonc|ts)$"
+pass_filenames = false
